@@ -1,6 +1,7 @@
 package db
 
 import (
+	"fmt"
 	"log"
 	"os"
 
@@ -9,23 +10,24 @@ import (
 )
 
 func Connect() (*gorm.DB, error) {
-	dsn := os.Getenv("DATABASE_URL")
-	if dsn == "" {
+	dsu := os.Getenv("DATABASE_URL")
+	fmt.Printf("DATABASE_URL: %s\n", dsu)
+	if dsu == "" {
 		log.Println("DATABASE_URL is not set")
 		return nil, os.ErrNotExist
 	}
 
-	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	db, err := gorm.Open(postgres.Open(dsu), &gorm.Config{})
 	if err != nil {
 		return nil, err
 	}
 
-	sqlDB, err := db.DB()
+	bdDB, err := db.DB()
 	if err != nil {
 		return nil, err
 	}
 
-	if err := sqlDB.Ping(); err != nil {
+	if err := bdDB.Ping(); err != nil {
 		return nil, err
 	}
 

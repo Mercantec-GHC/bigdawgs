@@ -2,14 +2,22 @@ package main
 
 import (
 	"log"
-	"net/http"
 	"os"
 
 	"bigdawgs/db"
+	"bigdawgs/handlers"
+	"bigdawgs/routes"
+
+	"github.com/joho/godotenv"
 )
 
 func main() {
-	if _, err := db.Connect(); err != nil {
+	if err := godotenv.Load(); err != nil {
+		log.Println("no .env file loaded")
+	}
+
+	database, err := db.Connect()
+	if err != nil {
 		log.Fatalf("failed to connect to database: %v", err)
 	}
 
@@ -18,15 +26,11 @@ func main() {
 		port = "6969"
 	}
 
-	http.HandleFunc("/healthz", func(w http.ResponseWriter, r *http.Request) {
-		w.WriteHeader(http.StatusOK)
-		_, _ = w.Write([]byte("ok"))
-	})
+	go handlers.RunTickLoop(database)
 
-	addr := "0.0.0.0:" + port
-	log.Printf("engine listening on %s", addr)
+	log.Printf("engine listening on 0.0.0.0:%s", port)
 
-	if err := http.ListenAndServe(addr, nil); err != nil {
+	if err := routes.ListenAndServe(port); err != nil {
 		log.Fatalf("server stopped: %v", err)
 	}
 }
