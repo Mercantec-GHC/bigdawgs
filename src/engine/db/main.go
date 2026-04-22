@@ -1,9 +1,10 @@
 package db
 
 import (
-	"fmt"
 	"log"
 	"os"
+
+	"bigdawgs/models"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -11,7 +12,6 @@ import (
 
 func Connect() (*gorm.DB, error) {
 	dsu := os.Getenv("DATABASE_URL")
-	fmt.Printf("DATABASE_URL: %s\n", dsu)
 	if dsu == "" {
 		log.Println("DATABASE_URL is not set")
 		return nil, os.ErrNotExist
@@ -28,6 +28,10 @@ func Connect() (*gorm.DB, error) {
 	}
 
 	if err := bdDB.Ping(); err != nil {
+		return nil, err
+	}
+
+	if err := models.AutoMigrate(db); err != nil {
 		return nil, err
 	}
 
