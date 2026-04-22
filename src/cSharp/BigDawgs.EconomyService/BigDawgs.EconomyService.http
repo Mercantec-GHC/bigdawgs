@@ -1,0 +1,6 @@
+@BigDawgs.EconomyService_HostAddress = http://localhost:5033
+
+GET {{BigDawgs.EconomyService_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
