@@ -2,7 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\src",
-    "\\src\\c#"
+    "\\src\\cSharp",
+    "\\src\\cSharp\\BigDawgs.EconomyService"
   ],
+  "SelectedNode": "\\src\\cSharp\\BigDawgs.EconomyService\\obj",
   "PreviewInSolutionExplorer": false
 }

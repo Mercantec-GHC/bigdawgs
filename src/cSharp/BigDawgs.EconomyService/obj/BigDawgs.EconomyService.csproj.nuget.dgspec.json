@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\kevin\\source\\repos\\bigdawgs\\src\\c#\\BigDawgs.EconomyService\\BigDawgs.EconomyService.csproj": {}
+    "C:\\Users\\kevin\\source\\repos\\bigdawgs\\src\\cSharp\\BigDawgs.EconomyService\\BigDawgs.EconomyService.csproj": {}
   },
   "projects": {
-    "C:\\Users\\kevin\\source\\repos\\bigdawgs\\src\\c#\\BigDawgs.EconomyService\\BigDawgs.EconomyService.csproj": {
+    "C:\\Users\\kevin\\source\\repos\\bigdawgs\\src\\cSharp\\BigDawgs.EconomyService\\BigDawgs.EconomyService.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\kevin\\source\\repos\\bigdawgs\\src\\c#\\BigDawgs.EconomyService\\BigDawgs.EconomyService.csproj",
+        "projectUniqueName": "C:\\Users\\kevin\\source\\repos\\bigdawgs\\src\\cSharp\\BigDawgs.EconomyService\\BigDawgs.EconomyService.csproj",
         "projectName": "BigDawgs.EconomyService",
-        "projectPath": "C:\\Users\\kevin\\source\\repos\\bigdawgs\\src\\c#\\BigDawgs.EconomyService\\BigDawgs.EconomyService.csproj",
+        "projectPath": "C:\\Users\\kevin\\source\\repos\\bigdawgs\\src\\cSharp\\BigDawgs.EconomyService\\BigDawgs.EconomyService.csproj",
         "packagesPath": "C:\\Users\\kevin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\kevin\\source\\repos\\bigdawgs\\src\\c#\\BigDawgs.EconomyService\\obj\\",
+        "outputPath": "C:\\Users\\kevin\\source\\repos\\bigdawgs\\src\\cSharp\\BigDawgs.EconomyService\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "D:\\Shared\\NuGetPackages"
@@ -56,6 +56,10 @@
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[10.0.6, )"
+            },
+            "xunit": {
+              "target": "Package",
+              "version": "[2.9.3, )"
             }
           },
           "imports": [
