@@ -30,7 +30,7 @@ func main() {
 
 	log.Printf("engine listening on 0.0.0.0:%s", port)
 
-	if err := routes.ListenAndServe(port); err != nil {
+	if err := routes.ListenAndServe(port, database); err != nil {
 		log.Fatalf("server stopped: %v", err)
 	}
 }
