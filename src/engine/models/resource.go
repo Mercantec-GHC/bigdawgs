@@ -10,18 +10,17 @@ const (
 	ResourceDog     ResourceKey = "dogs"
 )
 
-type ResourceBalance struct {
+type ResourceBag struct {
 	gorm.Model
-	UserID      uint   `gorm:"uniqueIndex:idx_user_resource_key;not null;index"`
+	User_id     uint   `gorm:"uniqueIndex:idx_user_resource_key;not null;index"`
 	ResourceKey string `gorm:"uniqueIndex:idx_user_resource_key;not null"`
 	Amount      int64  `gorm:"not null;default:0"`
-	Capacity    int64  `gorm:"not null;default:0"`
 }
 
-func DefaultResourceBalances(userID uint) []ResourceBalance {
-	return []ResourceBalance{
-		{UserID: userID, ResourceKey: string(ResourceDogCoin), Amount: 0, Capacity: 0},
-		{UserID: userID, ResourceKey: string(ResourceDogBone), Amount: 0, Capacity: 0},
-		{UserID: userID, ResourceKey: string(ResourceDog), Amount: 0, Capacity: 0},
+func DefaultResourceBalances(userID uint) []ResourceBag {
+	return []ResourceBag{
+		{User_id: userID, ResourceKey: string(ResourceDogCoin), Amount: 0},
+		{User_id: userID, ResourceKey: string(ResourceDogBone), Amount: 0},
+		{User_id: userID, ResourceKey: string(ResourceDog), Amount: 0},
 	}
 }

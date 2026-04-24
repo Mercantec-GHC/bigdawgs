@@ -1,6 +1,7 @@
-package handlers
+package buildings
 
 import (
+	"bigdawgs/handlers"
 	"bigdawgs/models"
 	"encoding/json"
 	"net/http"
@@ -13,7 +14,7 @@ const upgradeDuration = time.Second * 30
 
 func ListBuildingsHandler(db *gorm.DB) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		userID, err := UserID(r)
+		userID, err := handlers.UserID(r)
 		if err != nil {
 			http.Error(w, "missing authenticated user", http.StatusUnauthorized)
 			return
@@ -32,7 +33,7 @@ func ListBuildingsHandler(db *gorm.DB) http.Handler {
 
 func UpgradeBuilding(db *gorm.DB) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		userID, err := UserID(r)
+		userID, err := handlers.UserID(r)
 		if err != nil {
 			http.Error(w, "missing authenticated user", http.StatusUnauthorized)
 			return
