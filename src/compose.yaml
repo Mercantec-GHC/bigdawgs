@@ -1,0 +1,73 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: bigdawgs
+    environment:
+      POSTGRES_DB: bigdawgs
+      POSTGRES_USER: bigdawgs
+      POSTGRES_PASSWORD: bigdawgs
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  rails:
+    build:
+      context: ./big_dog_rise_of_the_pack_rails
+      dockerfile: Dockerfile
+    command: ["bin/rails", "server", "-b", "0.0.0.0", "-p", "7000"]
+    environment:
+      RAILS_ENV: development
+      DATABASE_URL: postgresql://bigdawgs:bigdawgs@postgres:5432/bigdawgs
+    ports:
+      - "7000:7000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  engine:
+    build:
+      context: ./engine
+      dockerfile: Dockerfile
+    environment:
+      PORT: 6969
+      DATABASE_URL: postgresql://bigdawgs:bigdawgs@postgres:5432/bigdawgs
+    ports:
+      - "6969:6969"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  economy-service:
+    build:
+      context: ./cSharp/BigDawgs.EconomyService
+      dockerfile: dockerfile
+    environment:
+      ASPNETCORE_URLS: http://0.0.0.0:8080
+      ConnectionStrings__Postgres: Host=postgres;Port=5432;Database=bigdawgs;Username=bigdawgs;Password=bigdawgs
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@mail.com
+      PGADMIN_DEFAULT_PASSWORD: admin123
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+
+volumes:
+  postgres_data:
+  pgadmin_data:
