@@ -22,7 +22,7 @@ services:
       dockerfile: Dockerfile
     command: ["bin/rails", "server", "-b", "0.0.0.0", "-p", "7000"]
     environment:
-      RAILS_ENV: production
+      RAILS_ENV: development
       DATABASE_URL: ${DATABASE_URL}
       JWT_SECRET: ${JWT_SECRET}
     ports:
