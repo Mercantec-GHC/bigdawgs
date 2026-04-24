@@ -15,7 +15,7 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  url: postgresql://bigdawgs:bigdawgs@localhost:5432/bigdawgs
+  url: <%= ENV.fetch("DATABASE_URL") { "postgresql://bigdawgs:bigdawgs@localhost:5432/bigdawgs" } %>
 
   # For details on connection pooling, see Rails configuration guide
   # https://guides.rubyonrails.org/configuring.html#database-pooling
