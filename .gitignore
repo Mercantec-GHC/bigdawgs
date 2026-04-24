@@ -2,3 +2,7 @@
 /site/
 /.vscode
 */node_modules/
+**/*.env
+**/.env
+.env
+**/tmp/*

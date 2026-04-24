@@ -15,7 +15,7 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  url: postgresql://big_dog_user:jxZhdc0tNnPagwVOI3dArL4NscTeRV6o@dpg-d7jjc5aqqhas738gqcsg-a.frankfurt-postgres.render.com/big_dog
+  url: postgresql://bigdawgs:bigdawgs@localhost:5432/bigdawgs
 
   # For details on connection pooling, see Rails configuration guide
   # https://guides.rubyonrails.org/configuring.html#database-pooling
@@ -81,18 +81,18 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    database: big_dog_rise_of_the_pack_rails_production
-    username: big_dog_rise_of_the_pack_rails
-    password: <%= ENV["BIG_DOG_RISE_OF_THE_PACK_RAILS_DATABASE_PASSWORD"] %>
-  cache:
-    <<: *primary_production
-    database: big_dog_rise_of_the_pack_rails_production_cache
-    migrations_paths: db/cache_migrate
-  queue:
-    <<: *primary_production
-    database: big_dog_rise_of_the_pack_rails_production_queue
-    migrations_paths: db/queue_migrate
-  cable:
-    <<: *primary_production
-    database: big_dog_rise_of_the_pack_rails_production_cable
-    migrations_paths: db/cable_migrate
+  #   database: big_dog_rise_of_the_pack_rails_production
+  #   username: big_dog_rise_of_the_pack_rails
+  #   password: <%= ENV["BIG_DOG_RISE_OF_THE_PACK_RAILS_DATABASE_PASSWORD"] %>
+  # cache:
+  #   <<: *primary_production
+  #   database: big_dog_rise_of_the_pack_rails_production_cache
+  #   migrations_paths: db/cache_migrate
+  # queue:
+  #   <<: *primary_production
+  #   database: big_dog_rise_of_the_pack_rails_production_queue
+  #   migrations_paths: db/queue_migrate
+  # cable:
+  #   <<: *primary_production
+  #   database: big_dog_rise_of_the_pack_rails_production_cable
+  #   migrations_paths: db/cable_migrate
