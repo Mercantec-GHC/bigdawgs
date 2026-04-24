@@ -4,14 +4,14 @@ import (
 	"bigdawgs/handlers"
 	"bigdawgs/models"
 	"encoding/json"
+	"fmt"
 	"net/http"
 
 	"gorm.io/gorm"
 )
 
 type DeleteBagResponse struct {
-	Message     string               `json:"message"`
-	ResourceBag []models.ResourceBag `json:"resourcesBag"`
+	Message string `json:"message"`
 }
 
 func DeleteResourceBag(db *gorm.DB) http.Handler {
@@ -22,18 +22,17 @@ func DeleteResourceBag(db *gorm.DB) http.Handler {
 			return
 		}
 
-		var resourceBag []models.ResourceBag
-		if err := db.Where("user_id = ?", userID).Find(&resourceBag).Delete(&resourceBag).Error; err != nil {
-			http.Error(w, "failed to load buildings", http.StatusInternalServerError)
+		if err := db.Unscoped().Where("user_id = ?", userID).Delete(&models.ResourceBag{}).Error; err != nil {
+			fmt.Println(err)
+			http.Error(w, "failed to delete resource bag", http.StatusInternalServerError)
 			return
 		}
 
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusCreated)
 
-		_ = json.NewEncoder(w).Encode(GetBagResponse{
-			Message:     "default resources created",
-			ResourceBag: resourceBag,
+		_ = json.NewEncoder(w).Encode(DeleteBagResponse{
+			Message: "Dawgbags where deleted",
 		})
 	})
 }
