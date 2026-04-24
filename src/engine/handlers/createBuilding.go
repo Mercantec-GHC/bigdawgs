@@ -4,22 +4,20 @@ import (
 	"bigdawgs/models"
 	"encoding/json"
 	"net/http"
-	"strconv"
 
 	"gorm.io/gorm"
 )
 
 func CreateDefaultBuildingHandler(db *gorm.DB) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		rawUserID := r.PathValue("userID")
-		parsedUserID, err := strconv.ParseUint(rawUserID, 10, 64)
-		if err != nil || parsedUserID == 0 {
-			http.Error(w, "invalid userID", http.StatusBadRequest)
+		userID, err := UserID(r)
+		if err != nil {
+			http.Error(w, "missing authenticated user", http.StatusUnauthorized)
 			return
 		}
 
 		building := models.Building{
-			UserID: uint(parsedUserID),
+			UserID: userID,
 			Key:    string(models.BuildingDoghouse),
 		}
 

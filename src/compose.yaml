@@ -23,7 +23,8 @@ services:
     command: ["bin/rails", "server", "-b", "0.0.0.0", "-p", "7000"]
     environment:
       RAILS_ENV: development
-      DATABASE_URL: postgresql://bigdawgs:bigdawgs@postgres:5432/bigdawgs
+      DATABASE_URL: ${DATABASE_URL}
+      JWT_SECRET: ${JWT_SECRET}
     ports:
       - "7000:7000"
     depends_on:
@@ -35,8 +36,9 @@ services:
       context: ./engine
       dockerfile: Dockerfile
     environment:
-      PORT: 6969
-      DATABASE_URL: postgresql://bigdawgs:bigdawgs@postgres:5432/bigdawgs
+      PORT: ${ENGINE_PORT}
+      DATABASE_URL: ${DATABASE_URL}
+      JWT_SECRET: ${JWT_SECRET}
     ports:
       - "6969:6969"
     depends_on:

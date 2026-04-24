@@ -52,13 +52,18 @@ var BuildingDefinitions = map[BuildingKey]BuildingDefinition{
 
 type Building struct {
 	gorm.Model
-	UserID         uint   `gorm:"uniqueIndex:idx_user_building_key;not null"`
+	UserID         uint   `gorm:"uniqueIndex:idx_user_building_key;not null;index"`
 	Key            string `gorm:"uniqueIndex:idx_user_building_key;not null"`
 	Level          int    `gorm:"not null;default:1"`
 	Count          int    `gorm:"not null;default:1"`
 	IsConstructing bool   `gorm:"not null;default:false"`
 	StartedAt      *time.Time
 	CompletesAt    *time.Time
+}
+
+func IsValidBuildingKey(key string) bool {
+	_, ok := BuildingDefinitions[BuildingKey(key)]
+	return ok
 }
 
 func (b Building) NormalizedLevel() int64 {

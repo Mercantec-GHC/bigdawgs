@@ -9,8 +9,12 @@ import (
 )
 
 func Register(mux *http.ServeMux, db *gorm.DB) {
+	auth := handlers.RequireAuth
+
 	mux.HandleFunc("/healthz", handlers.HealthzHandler)
-	mux.Handle("POST /users/{userID}/buildings/create", handlers.CreateDefaultBuildingHandler(db))
+	mux.Handle("GET /buildings", auth(handlers.ListBuildingsHandler(db)))
+	mux.Handle("POST /buildings/create", auth(handlers.CreateDefaultBuildingHandler(db)))
+	mux.Handle("POST /buildings/{building}/upgrade", auth(handlers.UpgradeBuilding(db)))
 }
 
 func ListenAndServe(port string, db *gorm.DB) error {

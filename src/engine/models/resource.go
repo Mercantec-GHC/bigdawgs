@@ -12,7 +12,7 @@ const (
 
 type ResourceBalance struct {
 	gorm.Model
-	UserID      uint   `gorm:"index;not null"`
+	UserID      uint   `gorm:"uniqueIndex:idx_user_resource_key;not null;index"`
 	ResourceKey string `gorm:"uniqueIndex:idx_user_resource_key;not null"`
 	Amount      int64  `gorm:"not null;default:0"`
 	Capacity    int64  `gorm:"not null;default:0"`
