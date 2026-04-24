@@ -22,24 +22,35 @@ func CreateDefaultResourceBag(db *gorm.DB) http.Handler {
 			return
 		}
 
-		defaults := models.DefaultResourceBalances(userID)
-		created := make([]models.ResourceBag, 0, len(defaults))
+		var existing []models.ResourceBag
+		result := db.Where("user_id = ?", userID).Find(&existing)
+		if result.Error != nil {
+			http.Error(w, "failed to check existing resources", http.StatusInternalServerError)
+			return
+		}
+		if len(existing) > 0 {
+			http.Error(w, "user already has a resource bag", http.StatusConflict)
+			return
+		} else {
+			defaults := models.DefaultResourceBalances(userID)
+			created := make([]models.ResourceBag, 0, len(defaults))
 
-		for _, row := range defaults {
-			if err := db.Create(&row).Error; err != nil {
-				http.Error(w, "failed to create default resources", http.StatusInternalServerError)
-				return
+			for _, row := range defaults {
+				if err := db.Create(&row).Error; err != nil {
+					http.Error(w, "failed to create default resources", http.StatusInternalServerError)
+					return
+				}
+
+				created = append(created, row)
 			}
 
-			created = append(created, row)
+			w.Header().Set("Content-Type", "application/json")
+			w.WriteHeader(http.StatusCreated)
+
+			_ = json.NewEncoder(w).Encode(CreateDefaultResponse{
+				Message:   "default resources created",
+				Resources: created,
+			})
 		}
-
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusCreated)
-
-		_ = json.NewEncoder(w).Encode(CreateDefaultResponse{
-			Message:   "default resources created",
-			Resources: created,
-		})
 	})
 }
