@@ -5,3 +5,54 @@
 **/*.env
 **/.env
 .env
+
+# ----------------------
+# Visual Studio / .NET
+# ----------------------
+.vs/
+bin/
+obj/
+.env/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# ----------------------
+# Test results
+# ----------------------
+TestResults/
+*.trx
+
+# ----------------------
+# Logs
+# ----------------------
+*.log
+
+# ----------------------
+# OS files
+# ----------------------
+.DS_Store
+Thumbs.db
+
+# ----------------------
+# NuGet
+# ----------------------
+*.nupkg
+*.snupkg
+packages/
+.nuget/
+
+# ----------------------
+# Build / publish
+# ----------------------
+publish/
+out/
+
+# ----------------------
+# Temp files
+# ----------------------
+*.tmp
+*.temp
