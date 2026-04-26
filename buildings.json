@@ -1,0 +1,83 @@
+{
+  "building_upgrade_price_multiplier": 1.25,
+  "production_per_level_multiplier": 1.15,
+  "starting_buildings": {
+    "the_doghouse": 1,
+    "bones_of_meat_factory": 2,
+    "dog_coin_den": 1,
+    "market": 0,
+    "kennel": 2
+  },
+  "doghouse_rules": {
+    "resource_cap_increase_per_level": 1000,
+    "extra_building_capacity_every_n_levels": 3,
+    "extra_building_capacity_amount": 1,
+    "market_unlock_level": 5
+  },
+  "buildings": {
+    "bones_of_meat_factory": {
+      "price": {
+        "bones_of_meat": 50,
+        "dog_coins": 50,
+        "dogs": 2
+      },
+      "production": {
+        "bones_of_meat": 10
+      },
+      "requires_doghouse_level": 1,
+      "base_max_count": 2,
+      "affected_by_doghouse_capacity": true
+    },
+    "dog_coin_den": {
+      "price": {
+        "bones_of_meat": 100,
+        "dog_coins": 25,
+        "dogs": 3
+      },
+      "production": {
+        "dog_coins": 5
+      },
+      "requires_doghouse_level": 1,
+      "base_max_count": 1,
+      "affected_by_doghouse_capacity": true
+    },
+    "the_doghouse": {
+      "price": {
+        "bones_of_meat": 500,
+        "dog_coins": 500,
+        "dogs": 10
+      },
+      "base_max_count": 1,
+      "affected_by_doghouse_capacity": false,
+      "effects": {
+        "max_building_level_controls_all": true
+      }
+    },
+    "kennel": {
+      "price": {
+        "bones_of_meat": 250,
+        "dog_coins": 100,
+        "dogs": 5
+      },
+      "effects": {
+        "max_dogs_increase": 5
+      },
+      "requires_doghouse_level": 1,
+      "base_max_count": 20,
+      "affected_by_doghouse_capacity": false
+    },
+    "market": {
+      "price": {
+        "bones_of_meat": 300,
+        "dog_coins": 300,
+        "dogs": 5
+      },
+      "effects": {
+        "better_prices_percent_per_level": 5
+      },
+      "requires_doghouse_level": 5,
+      "base_max_count": 1,
+      "affected_by_doghouse_capacity": false
+    }
+  }
+}

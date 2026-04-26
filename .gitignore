@@ -2,6 +2,9 @@
 /site/
 /.vscode
 */node_modules/
+**/*.env
+**/.env
+.env
 
 # ----------------------
 # Visual Studio / .NET
