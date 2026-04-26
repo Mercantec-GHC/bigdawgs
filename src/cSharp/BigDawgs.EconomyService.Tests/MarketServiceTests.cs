@@ -157,4 +157,203 @@ public class MarketServiceTests
 
         Assert.True(resource.CurrentPrice <= 10m);
     }
+
+    [Fact]
+    public void CalculatePrices_Is_Deterministic()
+    {
+        var service = new MarketService();
+
+        var request = new EconomyCalculationRequestDto
+        {
+            Resources = new List<MarketResourceInputDto>
+        {
+            new()
+            {
+                ResourceType = "BonesOfMeat",
+                CurrentSupply = 80,
+                CurrentDemand = 120,
+                PreviousPrice = 10m
+            }
+        }
+        };
+
+        var first = service.CalculatePrices(request);
+        var second = service.CalculatePrices(request);
+
+        Assert.Equal(
+            first.Resources.First().CurrentPrice,
+            second.Resources.First().CurrentPrice
+        );
+    }
+
+    [Fact]
+    public void CalculatePrices_Handles_Zero_Supply()
+    {
+        var service = new MarketService();
+
+        var request = new EconomyCalculationRequestDto
+        {
+            Resources = new List<MarketResourceInputDto>
+        {
+            new()
+            {
+                ResourceType = "BonesOfMeat",
+                CurrentSupply = 0,
+                CurrentDemand = 100,
+                PreviousPrice = 10m
+            }
+        }
+        };
+
+        var result = service.CalculatePrices(request);
+
+        // After smoothing: 10 * 0.70 + 20 * 0.30 = 13.00
+        Assert.Equal(13.00m, result.Resources.First().CurrentPrice);
+    }
+
+    [Fact]
+    public void CalculatePrices_Handles_Negative_Supply_And_Demand()
+    {
+        var service = new MarketService();
+
+        var request = new EconomyCalculationRequestDto
+        {
+            Resources = new List<MarketResourceInputDto>
+        {
+            new()
+            {
+                ResourceType = "BonesOfMeat",
+                CurrentSupply = -10,
+                CurrentDemand = -50,
+                PreviousPrice = 10m
+            }
+        }
+        };
+
+        var result = service.CalculatePrices(request);
+
+        Assert.Equal(9.25m, result.Resources.First().CurrentPrice);
+    }
+
+    [Fact]
+    public void CalculatePrices_Uses_PreviousPrice_As_BasePrice_For_Unknown_Resources()
+    {
+        var service = new MarketService();
+
+        var request = new EconomyCalculationRequestDto
+        {
+            Resources = new List<MarketResourceInputDto>
+        {
+            new()
+            {
+                ResourceType = "GoldenBone",
+                CurrentSupply = 100,
+                CurrentDemand = 100,
+                PreviousPrice = 25m
+            }
+        }
+        };
+
+        var result = service.CalculatePrices(request);
+        var resource = result.Resources.First();
+
+        Assert.Equal("GoldenBone", resource.ResourceType);
+        Assert.Equal(25m, resource.BasePrice);
+        Assert.Equal(25m, resource.CurrentPrice);
+    }
+
+    [Fact]
+    public void CalculatePrices_Uses_Price_Smoothing()
+    {
+        var service = new MarketService();
+
+        var request = new EconomyCalculationRequestDto
+        {
+            Resources = new List<MarketResourceInputDto>
+        {
+            new()
+            {
+                ResourceType = "BonesOfMeat",
+                CurrentSupply = 50,
+                CurrentDemand = 150,
+                PreviousPrice = 10m
+            }
+        }
+        };
+
+        var result = service.CalculatePrices(request);
+        var resource = result.Resources.First();
+
+        Assert.True(resource.CurrentPrice > 10m);
+        Assert.True(resource.CurrentPrice < 20m);
+    }
+
+    [Fact]
+    public void CalculatePrices_Adds_CurrentPrice_To_PriceHistory()
+    {
+        var service = new MarketService();
+
+        var request = new EconomyCalculationRequestDto
+        {
+            Resources = new List<MarketResourceInputDto>
+        {
+            new()
+            {
+                ResourceType = "BonesOfMeat",
+                CurrentSupply = 80,
+                CurrentDemand = 120,
+                PreviousPrice = 10m
+            }
+        }
+        };
+
+        var result = service.CalculatePrices(request);
+        var resource = result.Resources.First();
+
+        Assert.NotEmpty(resource.PriceHistory);
+        Assert.Contains(resource.CurrentPrice, resource.PriceHistory);
+    }
+
+    [Fact]
+    public void CalculatePrices_Limits_PriceHistory_Size()
+    {
+        var service = new MarketService();
+
+        for (var i = 0; i < 20; i++)
+        {
+            var request = new EconomyCalculationRequestDto
+            {
+                Resources = new List<MarketResourceInputDto>
+            {
+                new()
+                {
+                    ResourceType = "BonesOfMeat",
+                    CurrentSupply = 100,
+                    CurrentDemand = 100 + i,
+                    PreviousPrice = 10m
+                }
+            }
+            };
+
+            service.CalculatePrices(request);
+        }
+
+        var finalResult = service.CalculatePrices(new EconomyCalculationRequestDto
+        {
+            Resources = new List<MarketResourceInputDto>
+        {
+            new()
+            {
+                ResourceType = "BonesOfMeat",
+                CurrentSupply = 100,
+                CurrentDemand = 150,
+                PreviousPrice = 10m
+            }
+        }
+        });
+
+        var resource = finalResult.Resources.First();
+
+        Assert.True(resource.PriceHistory.Count <= 10);
+    }
 }
