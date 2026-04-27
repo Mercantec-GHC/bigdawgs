@@ -10,8 +10,8 @@ import (
 )
 
 type GetBagResponse struct {
-	Message     string               `json:"message"`
-	ResourceBag []models.ResourceBag `json:"resourcesBag"`
+	Message      string                        `json:"message"`
+	ResourceBags map[string]models.ResourceBag `json:"resourcesBag"`
 }
 
 func GetResourceBag(db *gorm.DB) http.Handler {
@@ -22,18 +22,23 @@ func GetResourceBag(db *gorm.DB) http.Handler {
 			return
 		}
 
-		var resourceBag []models.ResourceBag
-		if err := db.Where("user_id = ?", userID).Find(&resourceBag).Error; err != nil {
-			http.Error(w, "failed to load buildings", http.StatusInternalServerError)
+		var resourceBags []models.ResourceBag
+		if err := db.Where("user_id = ?", userID).Find(&resourceBags).Error; err != nil {
+			http.Error(w, "failed to load resource bag", http.StatusInternalServerError)
 			return
 		}
 
+		bagMap := make(map[string]models.ResourceBag, len(resourceBags))
+		for _, r := range resourceBags {
+			bagMap[r.ResourceKey] = r
+		}
+
 		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusCreated)
+		w.WriteHeader(http.StatusOK)
 
 		_ = json.NewEncoder(w).Encode(GetBagResponse{
-			Message:     "default resources created",
-			ResourceBag: resourceBag,
+			Message:      "resource bag loaded",
+			ResourceBags: bagMap,
 		})
 	})
 }

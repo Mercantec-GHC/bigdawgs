@@ -9,9 +9,11 @@ import (
 type BuildingKey string
 
 const (
-	BuildingMeatFactory BuildingKey = "meat_factory"
-	BuildingDogCoinDen  BuildingKey = "dog_coin_den"
-	BuildingDoghouse    BuildingKey = "the_doghouse"
+	MeatFactory BuildingKey = "meat_factory"
+	DogCoinDen  BuildingKey = "dog_coin_den"
+	Doghouse    BuildingKey = "the_doghouse"
+	DogKennel   BuildingKey = "the_dog_kennel"
+	Market      BuildingKey = "market"
 )
 
 type Production struct {
@@ -24,41 +26,52 @@ type BuildingDefinition struct {
 	Key            BuildingKey
 	DisplayName    string
 	BaseProduction Production
+	UpgradeCost    Production
 }
 
 var BuildingDefinitions = map[BuildingKey]BuildingDefinition{
-	BuildingMeatFactory: {
-		Key:         BuildingMeatFactory,
+	MeatFactory: {
+		Key:         MeatFactory,
 		DisplayName: "Meat Factory",
 		BaseProduction: Production{
 			DogBones: 10,
 		},
 	},
-	BuildingDogCoinDen: {
-		Key:         BuildingDogCoinDen,
+	DogCoinDen: {
+		Key:         DogCoinDen,
 		DisplayName: "Dog Coin Den",
 		BaseProduction: Production{
 			DogCoins: 5,
 		},
 	},
-	BuildingDoghouse: {
-		Key:         BuildingDoghouse,
+	Doghouse: {
+		Key:         Doghouse,
 		DisplayName: "The Doghouse",
 		BaseProduction: Production{
 			Dogs: 2,
 		},
 	},
+	DogKennel: {
+		Key:         DogKennel,
+		DisplayName: "The DogKennel",
+	},
+	Market: {
+		Key:         Market,
+		DisplayName: "The Market",
+	},
 }
 
 type Building struct {
 	gorm.Model
-	UserID         uint   `gorm:"uniqueIndex:idx_user_building_key;not null;index"`
-	Key            string `gorm:"uniqueIndex:idx_user_building_key;not null"`
-	Level          int    `gorm:"not null;default:1"`
-	Count          int    `gorm:"not null;default:1"`
-	IsConstructing bool   `gorm:"not null;default:false"`
-	StartedAt      *time.Time
-	CompletesAt    *time.Time
+	UserID              uint   `gorm:"uniqueIndex:idx_user_building_key;not null;index"`
+	Key                 string `gorm:"uniqueIndex:idx_user_building_key;not null"`
+	Level               int    `gorm:"not null;default:0"`
+	UpgradeCostDogCoins int64  `gorm:"not null;default:0"`
+	UpgradeCostDogBones int64  `gorm:"not null;default:0"`
+	UpgradeCostDogs     int64  `gorm:"not null;default:0"`
+	IsConstructing      bool   `gorm:"not null;default:false"`
+	StartedAt           *time.Time
+	CompletesAt         *time.Time
 }
 
 func IsValidBuildingKey(key string) bool {
@@ -74,21 +87,13 @@ func (b Building) NormalizedLevel() int64 {
 	return int64(b.Level)
 }
 
-func (b Building) NormalizedCount() int64 {
-	if b.Count < 1 {
-		return 1
-	}
-
-	return int64(b.Count)
-}
-
 func (b Building) ProductionPerTick() Production {
 	definition, ok := BuildingDefinitions[BuildingKey(b.Key)]
 	if !ok {
 		return Production{}
 	}
 
-	multiplier := b.NormalizedLevel() * b.NormalizedCount()
+	multiplier := b.NormalizedLevel()
 
 	return Production{
 		DogCoins: definition.BaseProduction.DogCoins * multiplier,

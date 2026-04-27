@@ -17,28 +17,38 @@ func CreateDefaultBuilding(db *gorm.DB) http.Handler {
 			return
 		}
 
-		building := models.Building{
-			UserID: userID,
-			Key:    string(models.BuildingDoghouse),
-		}
-
-		result := db.Where(models.Building{
-			UserID: building.UserID,
-			Key:    building.Key,
-		}).FirstOrCreate(&building)
-
-		if result.Error != nil {
-			http.Error(w, "failed to create building", http.StatusInternalServerError)
-			return
-		}
-
+		buildings := make([]models.Building, 0, len(models.BuildingDefinitions))
 		status := http.StatusCreated
-		if result.RowsAffected == 0 {
-			status = http.StatusOK
+
+		for _, building := range models.BuildingDefinitions {
+			building := models.Building{
+				UserID: userID,
+				Key:    string(building.Key),
+			}
+
+			if building.Key == string(models.Doghouse) {
+				building.Level = 1
+			}
+
+			result := db.Where(models.Building{
+				UserID: building.UserID,
+				Key:    building.Key,
+			}).FirstOrCreate(&building)
+
+			if result.Error != nil {
+				http.Error(w, "failed to create building", http.StatusInternalServerError)
+				return
+			}
+
+			if result.RowsAffected == 0 {
+				status = http.StatusOK
+			}
+
+			buildings = append(buildings, building)
 		}
 
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(status)
-		_ = json.NewEncoder(w).Encode(building)
+		_ = json.NewEncoder(w).Encode(buildings)
 	})
 }
