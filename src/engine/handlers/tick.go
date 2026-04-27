@@ -9,7 +9,7 @@ import (
 )
 
 func RunTickLoop(db *gorm.DB) {
-	ticker := time.NewTicker(1 * time.Hour)
+	ticker := time.NewTicker(15 * time.Second)
 	defer ticker.Stop()
 
 	for range ticker.C {
