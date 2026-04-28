@@ -2,17 +2,17 @@ using BigDawgs.EconomyService.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services
+builder.Services.AddControllers();
 builder.Services.AddSingleton<MarketService>();
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-app.MapGet("/", () => "Economy Service is running 🐶");
+app.UseSwagger();
+app.UseSwaggerUI();
 
-// Realistic endpoint
-app.MapGet("/market/prices", (MarketService marketService) =>
-{
-    return marketService.GetPrices();
-});
+app.MapControllers();
 
 app.Run();

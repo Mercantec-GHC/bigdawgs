@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="BigDawgs.EconomyService.Tests/BigDawgs.EconomyService.Tests.csproj" />
+  <Project Path="BigDawgs.EconomyService/BigDawgs.EconomyService.csproj" />
+</Solution>

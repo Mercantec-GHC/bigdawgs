@@ -1,22 +1,45 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\kevin\\source\\repos\\bigdawgs\\src\\c#\\BigDawgs.EconomyService\\",
+  "WorkspaceRootPath": "C:\\Users\\kevin\\source\\repos\\bigdawgs\\src\\cSharp\\BigDawgs.EconomyService\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{C14B567C-73F1-4C3D-90CF-AADE02B7B127}|BigDawgs.EconomyService.csproj|c:\\users\\kevin\\source\\repos\\bigdawgs\\src\\c#\\bigdawgs.economyservice\\dockerfile||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{C14B567C-73F1-4C3D-90CF-AADE02B7B127}|BigDawgs.EconomyService.csproj|solutionrelative:dockerfile||{8B382828-6202-11D1-8870-0000F87579D2}"
+      "AbsoluteMoniker": "D:0:0:{9788B27F-8604-3C92-5D85-7C51FCF1BE8F}|..\\BigDawgs.EconomyService.Tests\\BigDawgs.EconomyService.Tests.csproj|c:\\users\\kevin\\source\\repos\\bigdawgs\\src\\csharp\\bigdawgs.economyservice.tests\\marketservicetests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C14B567C-73F1-4C3D-90CF-AADE02B7B127}|BigDawgs.EconomyService.csproj|c:\\users\\kevin\\source\\repos\\bigdawgs\\src\\c#\\bigdawgs.economyservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C14B567C-73F1-4C3D-90CF-AADE02B7B127}|BigDawgs.EconomyService.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{25B989CB-AF1A-2EF5-5F23-ED90A2CF413B}|BigDawgs.EconomyService.csproj|c:\\users\\kevin\\source\\repos\\bigdawgs\\src\\csharp\\bigdawgs.economyservice\\services\\marketservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{25B989CB-AF1A-2EF5-5F23-ED90A2CF413B}|BigDawgs.EconomyService.csproj|solutionrelative:services\\marketservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C14B567C-73F1-4C3D-90CF-AADE02B7B127}|BigDawgs.EconomyService.csproj|c:\\users\\kevin\\source\\repos\\bigdawgs\\src\\c#\\bigdawgs.economyservice\\models\\marketprice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C14B567C-73F1-4C3D-90CF-AADE02B7B127}|BigDawgs.EconomyService.csproj|solutionrelative:models\\marketprice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{25B989CB-AF1A-2EF5-5F23-ED90A2CF413B}|BigDawgs.EconomyService.csproj|c:\\users\\kevin\\source\\repos\\bigdawgs\\src\\csharp\\bigdawgs.economyservice\\dtos\\economycalculationresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{25B989CB-AF1A-2EF5-5F23-ED90A2CF413B}|BigDawgs.EconomyService.csproj|solutionrelative:dtos\\economycalculationresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C14B567C-73F1-4C3D-90CF-AADE02B7B127}|BigDawgs.EconomyService.csproj|c:\\users\\kevin\\source\\repos\\bigdawgs\\src\\c#\\bigdawgs.economyservice\\services\\marketservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C14B567C-73F1-4C3D-90CF-AADE02B7B127}|BigDawgs.EconomyService.csproj|solutionrelative:services\\marketservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{25B989CB-AF1A-2EF5-5F23-ED90A2CF413B}|BigDawgs.EconomyService.csproj|c:\\users\\kevin\\source\\repos\\bigdawgs\\src\\csharp\\bigdawgs.economyservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{25B989CB-AF1A-2EF5-5F23-ED90A2CF413B}|BigDawgs.EconomyService.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{25B989CB-AF1A-2EF5-5F23-ED90A2CF413B}|BigDawgs.EconomyService.csproj|c:\\users\\kevin\\source\\repos\\bigdawgs\\src\\csharp\\bigdawgs.economyservice\\controllers\\marketcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{25B989CB-AF1A-2EF5-5F23-ED90A2CF413B}|BigDawgs.EconomyService.csproj|solutionrelative:controllers\\marketcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{25B989CB-AF1A-2EF5-5F23-ED90A2CF413B}|BigDawgs.EconomyService.csproj|c:\\users\\kevin\\source\\repos\\bigdawgs\\src\\csharp\\bigdawgs.economyservice\\dtos\\economycalculationrequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{25B989CB-AF1A-2EF5-5F23-ED90A2CF413B}|BigDawgs.EconomyService.csproj|solutionrelative:dtos\\economycalculationrequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{25B989CB-AF1A-2EF5-5F23-ED90A2CF413B}|BigDawgs.EconomyService.csproj|c:\\users\\kevin\\source\\repos\\bigdawgs\\src\\csharp\\bigdawgs.economyservice\\dtos\\marketresourceinputdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{25B989CB-AF1A-2EF5-5F23-ED90A2CF413B}|BigDawgs.EconomyService.csproj|solutionrelative:dtos\\marketresourceinputdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{25B989CB-AF1A-2EF5-5F23-ED90A2CF413B}|BigDawgs.EconomyService.csproj|c:\\users\\kevin\\source\\repos\\bigdawgs\\src\\csharp\\bigdawgs.economyservice\\dtos\\marketpricedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{25B989CB-AF1A-2EF5-5F23-ED90A2CF413B}|BigDawgs.EconomyService.csproj|solutionrelative:dtos\\marketpricedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{25B989CB-AF1A-2EF5-5F23-ED90A2CF413B}|BigDawgs.EconomyService.csproj|c:\\users\\kevin\\source\\repos\\bigdawgs\\src\\csharp\\bigdawgs.economyservice\\models\\marketprice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{25B989CB-AF1A-2EF5-5F23-ED90A2CF413B}|BigDawgs.EconomyService.csproj|solutionrelative:models\\marketprice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{25B989CB-AF1A-2EF5-5F23-ED90A2CF413B}|BigDawgs.EconomyService.csproj|c:\\users\\kevin\\source\\repos\\bigdawgs\\src\\csharp\\bigdawgs.economyservice\\dockerfile||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{25B989CB-AF1A-2EF5-5F23-ED90A2CF413B}|BigDawgs.EconomyService.csproj|solutionrelative:dockerfile||{8B382828-6202-11D1-8870-0000F87579D2}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,28 +49,93 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "dockerfile",
-              "DocumentMoniker": "C:\\Users\\kevin\\source\\repos\\bigdawgs\\src\\c#\\BigDawgs.EconomyService\\dockerfile",
-              "RelativeDocumentMoniker": "dockerfile",
-              "ToolTip": "C:\\Users\\kevin\\source\\repos\\bigdawgs\\src\\c#\\BigDawgs.EconomyService\\dockerfile",
-              "RelativeToolTip": "dockerfile",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAArAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2026-04-21T12:22:07.721Z",
+              "DocumentIndex": 4,
+              "Title": "MarketController.cs",
+              "DocumentMoniker": "C:\\Users\\kevin\\source\\repos\\bigdawgs\\src\\cSharp\\BigDawgs.EconomyService\\Controllers\\MarketController.cs",
+              "RelativeDocumentMoniker": "Controllers\\MarketController.cs",
+              "ToolTip": "C:\\Users\\kevin\\source\\repos\\bigdawgs\\src\\cSharp\\BigDawgs.EconomyService\\Controllers\\MarketController.cs",
+              "RelativeToolTip": "Controllers\\MarketController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAADwvwsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-22T21:27:06.64Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "MarketService.cs",
+              "DocumentMoniker": "C:\\Users\\kevin\\source\\repos\\bigdawgs\\src\\cSharp\\BigDawgs.EconomyService\\Services\\MarketService.cs",
+              "RelativeDocumentMoniker": "Services\\MarketService.cs",
+              "ToolTip": "C:\\Users\\kevin\\source\\repos\\bigdawgs\\src\\cSharp\\BigDawgs.EconomyService\\Services\\MarketService.cs",
+              "RelativeToolTip": "Services\\MarketService.cs",
+              "ViewState": "AgIAADoAAAAAAAAAAAAywFIAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-21T12:19:33.215Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "MarketResourceInputDto.cs",
+              "DocumentMoniker": "C:\\Users\\kevin\\source\\repos\\bigdawgs\\src\\cSharp\\BigDawgs.EconomyService\\DTOs\\MarketResourceInputDto.cs",
+              "RelativeDocumentMoniker": "DTOs\\MarketResourceInputDto.cs",
+              "ToolTip": "C:\\Users\\kevin\\source\\repos\\bigdawgs\\src\\cSharp\\BigDawgs.EconomyService\\DTOs\\MarketResourceInputDto.cs",
+              "RelativeToolTip": "DTOs\\MarketResourceInputDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-22T21:28:58.781Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "MarketPriceDto.cs",
+              "DocumentMoniker": "C:\\Users\\kevin\\source\\repos\\bigdawgs\\src\\cSharp\\BigDawgs.EconomyService\\DTOs\\MarketPriceDto.cs",
+              "RelativeDocumentMoniker": "DTOs\\MarketPriceDto.cs",
+              "ToolTip": "C:\\Users\\kevin\\source\\repos\\bigdawgs\\src\\cSharp\\BigDawgs.EconomyService\\DTOs\\MarketPriceDto.cs",
+              "RelativeToolTip": "DTOs\\MarketPriceDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-22T21:30:24.98Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "EconomyCalculationResponseDto.cs",
+              "DocumentMoniker": "C:\\Users\\kevin\\source\\repos\\bigdawgs\\src\\cSharp\\BigDawgs.EconomyService\\DTOs\\EconomyCalculationResponseDto.cs",
+              "RelativeDocumentMoniker": "DTOs\\EconomyCalculationResponseDto.cs",
+              "ToolTip": "C:\\Users\\kevin\\source\\repos\\bigdawgs\\src\\cSharp\\BigDawgs.EconomyService\\DTOs\\EconomyCalculationResponseDto.cs",
+              "RelativeToolTip": "DTOs\\EconomyCalculationResponseDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-22T21:19:25.455Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "EconomyCalculationRequestDto.cs",
+              "DocumentMoniker": "C:\\Users\\kevin\\source\\repos\\bigdawgs\\src\\cSharp\\BigDawgs.EconomyService\\DTOs\\EconomyCalculationRequestDto.cs",
+              "RelativeDocumentMoniker": "DTOs\\EconomyCalculationRequestDto.cs",
+              "ToolTip": "C:\\Users\\kevin\\source\\repos\\bigdawgs\\src\\cSharp\\BigDawgs.EconomyService\\DTOs\\EconomyCalculationRequestDto.cs",
+              "RelativeToolTip": "DTOs\\EconomyCalculationRequestDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-22T21:19:16.31Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\kevin\\source\\repos\\bigdawgs\\src\\c#\\BigDawgs.EconomyService\\Program.cs",
+              "DocumentMoniker": "C:\\Users\\kevin\\source\\repos\\bigdawgs\\src\\cSharp\\BigDawgs.EconomyService\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "C:\\Users\\kevin\\source\\repos\\bigdawgs\\src\\c#\\BigDawgs.EconomyService\\Program.cs",
+              "ToolTip": "C:\\Users\\kevin\\source\\repos\\bigdawgs\\src\\cSharp\\BigDawgs.EconomyService\\Program.cs",
               "RelativeToolTip": "Program.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -56,29 +144,41 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
+              "Title": "MarketServiceTests.cs",
+              "DocumentMoniker": "C:\\Users\\kevin\\source\\repos\\bigdawgs\\src\\cSharp\\BigDawgs.EconomyService.Tests\\MarketServiceTests.cs",
+              "RelativeDocumentMoniker": "..\\BigDawgs.EconomyService.Tests\\MarketServiceTests.cs",
+              "ToolTip": "C:\\Users\\kevin\\source\\repos\\bigdawgs\\src\\cSharp\\BigDawgs.EconomyService.Tests\\MarketServiceTests.cs",
+              "RelativeToolTip": "..\\BigDawgs.EconomyService.Tests\\MarketServiceTests.cs",
+              "ViewState": "AgIAAMgAAAAAAAAAAAAuwMcAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-22T21:56:28.369Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
               "Title": "MarketPrice.cs",
-              "DocumentMoniker": "C:\\Users\\kevin\\source\\repos\\bigdawgs\\src\\c#\\BigDawgs.EconomyService\\Models\\MarketPrice.cs",
+              "DocumentMoniker": "C:\\Users\\kevin\\source\\repos\\bigdawgs\\src\\cSharp\\BigDawgs.EconomyService\\Models\\MarketPrice.cs",
               "RelativeDocumentMoniker": "Models\\MarketPrice.cs",
-              "ToolTip": "C:\\Users\\kevin\\source\\repos\\bigdawgs\\src\\c#\\BigDawgs.EconomyService\\Models\\MarketPrice.cs",
+              "ToolTip": "C:\\Users\\kevin\\source\\repos\\bigdawgs\\src\\cSharp\\BigDawgs.EconomyService\\Models\\MarketPrice.cs",
               "RelativeToolTip": "Models\\MarketPrice.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAyAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-04-21T12:20:51.211Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "MarketService.cs",
-              "DocumentMoniker": "C:\\Users\\kevin\\source\\repos\\bigdawgs\\src\\c#\\BigDawgs.EconomyService\\Services\\MarketService.cs",
-              "RelativeDocumentMoniker": "Services\\MarketService.cs",
-              "ToolTip": "C:\\Users\\kevin\\source\\repos\\bigdawgs\\src\\c#\\BigDawgs.EconomyService\\Services\\MarketService.cs",
-              "RelativeToolTip": "Services\\MarketService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAcAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-21T12:19:33.215Z",
-              "EditorCaption": ""
+              "DocumentIndex": 9,
+              "Title": "dockerfile",
+              "DocumentMoniker": "C:\\Users\\kevin\\source\\repos\\bigdawgs\\src\\cSharp\\BigDawgs.EconomyService\\dockerfile",
+              "RelativeDocumentMoniker": "dockerfile",
+              "ToolTip": "C:\\Users\\kevin\\source\\repos\\bigdawgs\\src\\cSharp\\BigDawgs.EconomyService\\dockerfile",
+              "RelativeToolTip": "dockerfile",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-04-21T12:22:07.721Z"
             }
           ]
         }
