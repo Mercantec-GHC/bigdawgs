@@ -1,0 +1,29 @@
+nav.game-navbar.mt-1
+  .game-navbar__bg
+  .game-navbar__inner
+    .game-navbar__left
+      = link_to root_path, class: "game-navbar__logo-wrap" do
+        = image_tag "logo.png", alt: "Big Dog", class: "game-navbar__logo"
+
+    .game-navbar__center
+      = link_to "#", class: "game-navbar__item game-navbar__item--active" do
+        span.game-navbar__icon 🐾
+        span Pack
+
+      = link_to "#", class: "game-navbar__item" do
+        span.game-navbar__icon 🏰
+        span Buildings
+
+      = link_to "#", class: "game-navbar__item" do
+        span.game-navbar__icon 🌍
+        span Map
+
+      = link_to "#", class: "game-navbar__item" do
+        span.game-navbar__icon 🗺️
+        span Explore
+
+
+    .game-navbar__right
+      = link_to "#", class: "game-navbar__profile" do
+        span.game-navbar__profile-avatar 🐺
+        span.game-navbar__profile-name Profile

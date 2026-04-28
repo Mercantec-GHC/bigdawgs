@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "sqt6p2fkyE8=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\kevin\\source\\repos\\bigdawgs\\src\\c#\\BigDawgs.EconomyService\\BigDawgs.EconomyService.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\kevin\\.nuget\\packages\\microsoft.aspnetcore.openapi\\10.0.6\\microsoft.aspnetcore.openapi.10.0.6.nupkg.sha512",
+    "C:\\Users\\kevin\\.nuget\\packages\\microsoft.openapi\\2.0.0\\microsoft.openapi.2.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
