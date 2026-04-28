@@ -1,0 +1,45 @@
+.login-page.d-flex.flex-column.min-vh-100
+  .container.py-4.flex-grow-1.d-flex.flex-column
+    .d-flex.flex-column.justify-content-center.align-items-center.flex-grow-1
+      = image_tag  "title.png", alt: "Big Dog Rise Of The Pack", class: "mb-4, title-img"
+      .col-12.col-md-8.col-lg-5.col-xl-4
+        .card.border-0.shadow-lg.rounded-4.login-card.position-relative
+          .card-body.p-4.p-md-5
+            h1.text-center.fw-semibold.mb-2
+              | Welcome
+              br
+              | new dog
+            p.text-center.mb-2 Your new pack awaits you.
+            = simple_form_for @user, html: { class: "d-grid gap-3" } do |f|
+              = render "shared/alert_flash"
+              = f.error_notification
+              = f.input :email,
+                label: "Email",
+                input_html: { class: "form-control border-0 border-bottom rounded-0 px-0" },
+                wrapper: :default,
+                wrapper_html: { class: "mb-0" }  
+
+              = f.input :password,
+                label: "Password",
+                input_html: { class: "form-control border-0 border-bottom rounded-0 px-0" },
+                wrapper: :default,
+                wrapper_html: { class: "mb-0" }
+                
+              = f.input :password_confirmation,
+                label: "Confirm Password",
+                input_html: { class: "form-control border-0 border-bottom rounded-0 px-0" },
+                wrapper: :default,
+                wrapper_html: { class: "mb-0" }
+
+              = f.input :name,
+                label: "Ingame name",
+                input_html: { class: "form-control border-0 border-bottom rounded-0 px-0" },
+                wrapper: :default,
+                wrapper_html: { class: "mb-0" }
+
+
+              = f.button :submit, "Create pack", class: "btn btn-primary w-100 rounded-3 py-2 text-white"
+
+            p.text-center.small.mt-4.mb-0
+              | lready have a pack?
+              = link_to " back to pack", "/session", class: "text-decoration-none fw-medium"
