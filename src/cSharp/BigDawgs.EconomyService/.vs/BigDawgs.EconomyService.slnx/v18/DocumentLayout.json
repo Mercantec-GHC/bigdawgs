@@ -9,6 +9,10 @@
       "AbsoluteMoniker": "D:0:0:{9788B27F-8604-3C92-5D85-7C51FCF1BE8F}|..\\BigDawgs.EconomyService.Tests\\BigDawgs.EconomyService.Tests.csproj|c:\\users\\kevin\\source\\repos\\bigdawgs\\src\\csharp\\bigdawgs.economyservice.tests\\botservicetests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{25B989CB-AF1A-2EF5-5F23-ED90A2CF413B}|BigDawgs.EconomyService.csproj|c:\\users\\kevin\\source\\repos\\bigdawgs\\src\\csharp\\bigdawgs.economyservice\\dockerfile||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{25B989CB-AF1A-2EF5-5F23-ED90A2CF413B}|BigDawgs.EconomyService.csproj|solutionrelative:dockerfile||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{25B989CB-AF1A-2EF5-5F23-ED90A2CF413B}|BigDawgs.EconomyService.csproj|c:\\users\\kevin\\source\\repos\\bigdawgs\\src\\csharp\\bigdawgs.economyservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{25B989CB-AF1A-2EF5-5F23-ED90A2CF413B}|BigDawgs.EconomyService.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -19,10 +23,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{25B989CB-AF1A-2EF5-5F23-ED90A2CF413B}|BigDawgs.EconomyService.csproj|c:\\users\\kevin\\source\\repos\\bigdawgs\\src\\csharp\\bigdawgs.economyservice\\services\\marketservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{25B989CB-AF1A-2EF5-5F23-ED90A2CF413B}|BigDawgs.EconomyService.csproj|solutionrelative:services\\marketservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{25B989CB-AF1A-2EF5-5F23-ED90A2CF413B}|BigDawgs.EconomyService.csproj|c:\\users\\kevin\\source\\repos\\bigdawgs\\src\\csharp\\bigdawgs.economyservice\\dockerfile||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{25B989CB-AF1A-2EF5-5F23-ED90A2CF413B}|BigDawgs.EconomyService.csproj|solutionrelative:dockerfile||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{25B989CB-AF1A-2EF5-5F23-ED90A2CF413B}|BigDawgs.EconomyService.csproj|c:\\users\\kevin\\source\\repos\\bigdawgs\\src\\csharp\\bigdawgs.economyservice\\services\\botservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -67,7 +67,7 @@
               "RelativeDocumentMoniker": "..\\BigDawgs.EconomyService.Tests\\MarketServiceTests.cs",
               "ToolTip": "C:\\Users\\kevin\\source\\repos\\bigdawgs\\src\\cSharp\\BigDawgs.EconomyService.Tests\\MarketServiceTests.cs",
               "RelativeToolTip": "..\\BigDawgs.EconomyService.Tests\\MarketServiceTests.cs",
-              "ViewState": "AgIAAB8AAAAAAAAAAAAwwCgAAAAKAAAAAAAAAA==",
+              "ViewState": "AgIAAJgAAAAAAAAAAAAAwCgAAAAKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-04-22T21:56:28.369Z",
               "EditorCaption": ""
@@ -86,7 +86,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "MarketController.cs",
               "DocumentMoniker": "C:\\Users\\kevin\\source\\repos\\bigdawgs\\src\\cSharp\\BigDawgs.EconomyService\\Controllers\\MarketController.cs",
               "RelativeDocumentMoniker": "Controllers\\MarketController.cs",
@@ -99,7 +99,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\kevin\\source\\repos\\bigdawgs\\src\\cSharp\\BigDawgs.EconomyService\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
@@ -136,7 +136,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "MarketService.cs",
               "DocumentMoniker": "C:\\Users\\kevin\\source\\repos\\bigdawgs\\src\\cSharp\\BigDawgs.EconomyService\\Services\\MarketService.cs",
               "RelativeDocumentMoniker": "Services\\MarketService.cs",
@@ -149,13 +149,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 2,
               "Title": "dockerfile",
               "DocumentMoniker": "C:\\Users\\kevin\\source\\repos\\bigdawgs\\src\\cSharp\\BigDawgs.EconomyService\\dockerfile",
               "RelativeDocumentMoniker": "dockerfile",
               "ToolTip": "C:\\Users\\kevin\\source\\repos\\bigdawgs\\src\\cSharp\\BigDawgs.EconomyService\\dockerfile",
               "RelativeToolTip": "dockerfile",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAATAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
               "WhenOpened": "2026-04-21T12:22:07.721Z",
               "EditorCaption": ""
