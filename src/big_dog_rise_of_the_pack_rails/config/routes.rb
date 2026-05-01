@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   get "marketplace/show"
-  get "marketplace/create"
+  post "marketplace/create"
   get "resource_bar/show"
   resources :building
   resource :session, only: %i[ new create show ]
