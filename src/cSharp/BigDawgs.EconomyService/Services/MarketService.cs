@@ -1,90 +1,83 @@
 ﻿using BigDawgs.EconomyService.DTOs;
-using BigDawgs.EconomyService.Models;
 
 namespace BigDawgs.EconomyService.Services;
 
 public class MarketService
 {
     private static readonly PriceBalancingSettings Balancing = new();
+
+    private const string DogCoins = "DogCoins";
+
     private static readonly Dictionary<string, List<decimal>> PriceHistory = new(StringComparer.OrdinalIgnoreCase);
 
     private static readonly Dictionary<string, decimal> BasePrices = new(StringComparer.OrdinalIgnoreCase)
     {
-        ["BonesOfMeat"] = 10m,
-        ["DogCoins"] = 5m
+        [DogCoins] = 5m
     };
 
-    public EconomyCalculationResponseDto GetPrices()
-    {
-        var prices = new List<MarketPrice>
-        {
-            CreateDefaultPrice("BonesOfMeat"),
-            CreateDefaultPrice("DogCoins")
-        };
+    private int _dogBoneSupply = 100;
+    private int _dogBoneDemand = 100;
+    private decimal _currentDogCoinsPrice = 5m;
 
-        return MapToResponse(prices);
+    private readonly List<MarketTradeHistory> _tradeHistory = new();
+
+    public MarketDogBonePriceResponseDto GetPrices()
+    {
+        return new MarketDogBonePriceResponseDto
+        {
+            Resources = new MarketDogBonePriceDto
+            {
+                CurrentDogCoinsPrice = _currentDogCoinsPrice
+            }
+        };
     }
 
-    public EconomyCalculationResponseDto CalculatePrices(EconomyCalculationRequestDto request)
+    public MarketDogBonePriceResponseDto HandleTrade(MarketDogBoneTradeRequestDto request)
     {
-        var prices = new List<MarketPrice>();
+        var trade = request.Resources;
+        var type = trade.Type.Trim().ToLower();
 
-        foreach (var resource in request.Resources)
+        if (type != "buy" && type != "sell")
         {
-            var basePrice = BasePrices.TryGetValue(resource.ResourceType, out var configuredBasePrice)
-                ? configuredBasePrice
-                : resource.PreviousPrice;
-
-            var currentPrice = CalculatePrice(
-                basePrice,
-                resource.PreviousPrice,
-                resource.CurrentSupply,
-                resource.CurrentDemand
-            );
-
-            prices.Add(new MarketPrice
-            {
-                ResourceType = resource.ResourceType,
-                BasePrice = basePrice,
-                CurrentPrice = currentPrice,
-                Supply = resource.CurrentSupply,
-                Demand = resource.CurrentDemand,
-                PriceHistory = UpdatePriceHistory(resource.ResourceType, currentPrice)
-            });
+            throw new ArgumentException("Type must be either 'buy' or 'sell'.");
         }
 
-        return MapToResponse(prices);
-    }
-
-    private static MarketPrice CreateDefaultPrice(string resourceType)
-    {
-        var basePrice = BasePrices[resourceType];
-
-        return new MarketPrice
+        if (trade.Amount <= 0)
         {
-            ResourceType = resourceType,
-            BasePrice = basePrice,
-            CurrentPrice = basePrice,
-            Supply = 100,
-            Demand = 100,
-            PriceHistory = UpdatePriceHistory(resourceType, basePrice)
-        };
-    }
+            throw new ArgumentException("Amount must be higher than 0.");
+        }
 
-    private static EconomyCalculationResponseDto MapToResponse(List<MarketPrice> prices)
-    {
-        return new EconomyCalculationResponseDto
+        if (type == "buy")
         {
-            Resources = prices.Select(p => new MarketPriceDto
-            {
-                ResourceType = p.ResourceType,
-                BasePrice = p.BasePrice,
-                CurrentPrice = p.CurrentPrice,
-                Supply = p.Supply,
-                Demand = p.Demand,
-                PriceHistory = p.PriceHistory
-            }).ToList()
-        };
+            _dogBoneDemand += trade.Amount;
+            _dogBoneSupply = Math.Max(0, _dogBoneSupply - trade.Amount);
+        }
+        else
+        {
+            _dogBoneSupply += trade.Amount;
+            _dogBoneDemand = Math.Max(0, _dogBoneDemand - trade.Amount);
+        }
+
+        _currentDogCoinsPrice = CalculatePrice(
+            BasePrices[DogCoins],
+            _currentDogCoinsPrice,
+            _dogBoneSupply,
+            _dogBoneDemand
+        );
+
+        _tradeHistory.Add(new MarketTradeHistory
+        {
+            Type = type,
+            Amount = trade.Amount,
+            PriceAtTrade = _currentDogCoinsPrice,
+            SupplyAfterTrade = _dogBoneSupply,
+            DemandAfterTrade = _dogBoneDemand,
+            CreatedAt = DateTime.UtcNow
+        });
+
+        UpdatePriceHistory(DogCoins, _currentDogCoinsPrice);
+
+        return GetPrices();
     }
 
     private static decimal CalculatePrice(decimal basePrice, decimal previousPrice, int supply, int demand)
@@ -96,6 +89,7 @@ public class MarketService
         var demandSupplyRatio = (decimal)demand / safeSupply;
 
         var marketFactor = 1m + ((demandSupplyRatio - 1m) * Balancing.Sensitivity);
+
         marketFactor = Math.Clamp(
             marketFactor,
             Balancing.MinMarketFactor,
@@ -105,8 +99,8 @@ public class MarketService
         var rawPrice = previousPrice * marketFactor;
 
         var smoothedPrice =
-            (previousPrice * Balancing.PreviousPriceWeight) +
-            (rawPrice * Balancing.NewPriceWeight);
+            previousPrice * Balancing.PreviousPriceWeight +
+            rawPrice * Balancing.NewPriceWeight;
 
         var minPrice = basePrice * Balancing.MinPriceMultiplier;
         var maxPrice = basePrice * Balancing.MaxPriceMultiplier;
@@ -131,6 +125,16 @@ public class MarketService
         return new List<decimal>(PriceHistory[resourceType]);
     }
 
+    private class MarketTradeHistory
+    {
+        public string Type { get; set; } = string.Empty;
+        public int Amount { get; set; }
+        public decimal PriceAtTrade { get; set; }
+        public int SupplyAfterTrade { get; set; }
+        public int DemandAfterTrade { get; set; }
+        public DateTime CreatedAt { get; set; }
+    }
+
     public class PriceBalancingSettings
     {
         public decimal Sensitivity { get; init; } = 0.25m;
@@ -138,9 +142,51 @@ public class MarketService
         public decimal MaxMarketFactor { get; init; } = 2.00m;
         public decimal MinPriceMultiplier { get; init; } = 0.50m;
         public decimal MaxPriceMultiplier { get; init; } = 2.00m;
-
         public decimal PreviousPriceWeight { get; init; } = 0.70m;
         public decimal NewPriceWeight { get; init; } = 0.30m;
         public int MaxHistoryEntries { get; init; } = 10;
+    }
+
+    public MarketDogBonePriceResponseDto RunBotTrade()
+    {
+        var botTrade = DecideBotTrade();
+
+        if (botTrade is null)
+        {
+            return GetPrices();
+        }
+
+        return HandleTrade(new MarketDogBoneTradeRequestDto
+        {
+            Resources = botTrade
+        });
+    }
+
+    private MarketDogBoneTradeDto? DecideBotTrade()
+    {
+        if (_currentDogCoinsPrice <= 4m)
+        {
+            return new MarketDogBoneTradeDto
+            {
+                Type = "buy",
+                Amount = 10
+            };
+        }
+
+        if (_currentDogCoinsPrice >= 8m)
+        {
+            return new MarketDogBoneTradeDto
+            {
+                Type = "sell",
+                Amount = 10
+            };
+        }
+
+        return null;
+    }
+
+    public decimal GetCurrentDogCoinsPrice()
+    {
+        return _currentDogCoinsPrice;
     }
 }
