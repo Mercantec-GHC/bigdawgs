@@ -24,6 +24,10 @@ $headings-font-weight: 500;
   width: auto;
 }
 
+.font-size-14 {
+  font-size: 0.875rem;
+}
+
 // .game-navbar {
 //   position: relative;
 //   height: 110px; // match dit billede
@@ -40,7 +44,7 @@ $headings-font-weight: 500;
 // }
 
 .game-navbar {
-  position: sticky;
+  // position: sticky;
   top: 0;
   opacity: 0.80;
   z-index: 1000;
@@ -281,7 +285,7 @@ body {
     radial-gradient(circle at 50% 20%, rgba(255,255,255,0.03), transparent 40%),
     linear-gradient(180deg, #0c0d10 0%, #08090c 45%, #050608 100%);
   position: relative;
-  overflow: hidden;
+  overflow: auto;
 }
 
 .game-bg::before {

@@ -12,4 +12,8 @@ class User < ApplicationRecord
     token = JsonWebTokenService.encode({ user_id: id, email: email, iss: "big_dog_rails", exp: 5.minutes.from_now.to_i })
   end
   
+  def cashed_resources
+    Rails.cache.read([:resource_data, id])
+  end
+  
 end

@@ -1,4 +1,28 @@
+
+
+"resourcesBag": 
 {
-  "name": "app",
-  "private": "true"
-}
+  "dogcoin": {
+            "ID": 1,
+            "CreatedAt": "2026-04-27T07:05:35.353169Z",
+            "UpdatedAt": "2026-04-27T07:05:35.353169Z",
+            "DeletedAt": null,
+            "User_id": 14,
+            "Amount": 20
+        },
+  "dogbones": {
+            "ID": 2,
+            "CreatedAt": "2026-04-27T07:05:35.376154Z",
+            "UpdatedAt": "2026-04-27T07:05:35.376154Z",
+            "DeletedAt": null,
+            "User_id": 14,
+            "Amount": 0
+        },
+  "dogs": {
+            "ID": 3,
+            "CreatedAt": "2026-04-27T07:05:35.437845Z",
+            "UpdatedAt": "2026-04-27T07:05:35.437845Z",
+            "DeletedAt": null,
+            "User_id": 14,
+            "Amount": 16
+        }

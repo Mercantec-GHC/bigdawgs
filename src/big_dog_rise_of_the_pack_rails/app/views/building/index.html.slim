@@ -1,2 +1,5 @@
-h1 Building#index
-p Find me in app/views/building/index.html.slim
+.d-flex.text-white.align-items-center.flex-column
+  h1 Buildings to inprove your pack
+  .d-flex.col-12.justify-content-center.flex-wrap
+    - @buildings_view_model.buildings.each do |building|
+      = render "building/building_card", building: building

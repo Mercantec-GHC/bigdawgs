@@ -1,0 +1,22 @@
+.d-flex.text-white.flex-column
+  - if @market_place.fetch("Level", 0) > 0
+    .d-flex.col-12.justify-content-center.flex-column.align-items-center
+      h1 Market Place
+      h5 The Market is always open. Buy and sell Dog Bones. Prices change with suppley and demand.
+    .d-flex
+      .card.bg-primary.bg-gradient.bg-opacity-25.border.border-2.border-primary.justfy-content-center.col-5
+        .card-body.d-flex.justify-content-start.flex-column.align-items-start.justify-content-start
+          h4.card-title.text-primary.fw-bold ↓Sell Dog Bones
+          .d-flex.col-12
+            .d-flex.bg-black.flex-column.bg-opacity-50.col-6.border.border-1.border-black
+              p.text-white.card-text.ms-2 you have
+              h4.text-white.card-text.ms-2 🦴#{current_user.cashed_resources&.fetch(:dog_bones)}
+            .d-flex.bg-black.flex-column.bg-opacity-50.col-6.border.border-1.border-black
+              p.text-white.card-text.ms-2 you recive
+              h4.text-white.card-text.ms-2 🪙0
+          / = simple_form_for
+         
+    .d-flex
+  - else 
+    .d-flex.col-12.justify-content-center
+      h2 Market Place not build yet, you need market place to buy and sell resources

@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
-  resource :building
+  get "marketplace/show"
+  get "marketplace/create"
+  get "resource_bar/show"
+  resources :building
   resource :session, only: %i[ new create show ]
   resources :users, only: %i[new create]
   root to: "home#index"
