@@ -1,0 +1,21 @@
+.card.bg-dark.text-white.m-2.col-5.font-size-14
+  .card-header.d-flex.justify-content-center.flex-column.align-items-center
+      h5.mb-0 = building.name
+      span.badge.bg-secondary.mt-2.col-2 = building.level > 0 ? "Level #{building.level}" : "Not built"
+  .card-body.d-flex.flex-column.p-0.px-2.justify-content-between.align-content-between.align-items-between
+    .d-flex
+      .d-flex.flex-column.col-6
+        h5.card-text Building description 
+        p.card-text = building.description.gsub("\n", "<br>").html_safe
+        p.card-text =  "Current production: 1 dog bone per minute." if building.production != nil
+      .d-flex.flex-column.align-items-center.col-6.mb-2
+        = image_tag building.image_path, alt: building.name, class: "card-img-top img-fluid"
+        - if building.is_constructing 
+          p.card-text.my-2 Time left: 10:10
+
+    .d-flex.justify-content-center.mb-2
+      - if building.is_constructing
+        = button_to "Under construction", "#", class: "btn btn-primary disabled"
+      - else
+        = button_to building.cost.gsub(":", " "), building_index_path(building: building.building_data_for_construcktion), method: :post, class: "btn btn-primary"
+      = link_to "show details", "#", class: "btn btn-secondary ms-2"

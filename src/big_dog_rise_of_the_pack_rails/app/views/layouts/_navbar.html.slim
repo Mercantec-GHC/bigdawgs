@@ -6,17 +6,17 @@ nav.game-navbar.mt-1
         = image_tag "logo.png", alt: "Big Dog", class: "game-navbar__logo"
 
     .game-navbar__center
-      = link_to "#", class: "game-navbar__item game-navbar__item--active" do
+      = link_to "#", class: "game-navbar__item" do
         span.game-navbar__icon 🐾
         span Pack
 
-      = link_to "#", class: "game-navbar__item" do
+      = link_to building_index_path, class: "game-navbar__item #{current_page?(building_index_path) ? 'game-navbar__item--active' : ''}" do
         span.game-navbar__icon 🏰
         span Buildings
 
-      = link_to "#", class: "game-navbar__item" do
-        span.game-navbar__icon 🌍
-        span Map
+      = link_to marketplace_show_path, class: "game-navbar__item #{current_page?(marketplace_show_path) ? 'game-navbar__item--active' : ''}" do
+        span.game-navbar__icon 🪙
+        span Marketplace
 
       = link_to "#", class: "game-navbar__item" do
         span.game-navbar__icon 🗺️

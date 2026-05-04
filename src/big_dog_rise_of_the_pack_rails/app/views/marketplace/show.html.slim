@@ -1,0 +1,116 @@
+- dog_bones = current_user.cashed_resources&.fetch(:dog_bones, 0).to_i
+
+.d-flex.text-white.flex-column
+  - if @market_place.fetch("Level", 0) > 0
+    .d-flex.col-12.justify-content-center.flex-column.align-items-center
+      h1 Market Place
+      h5 The Market is always open. Buy and sell Dog Bones. Prices change with supply and demand.
+
+    .d-flex.justify-content-center.mt-3
+      .card.border-2.border-primary.bg-primary.bg-opacity-25.col-12.col-md-8.col-lg-5
+        .card-body.d-flex.flex-column.gap-3 data={ controller: "marketplace-slider", "marketplace-slider-rate-value": @price }
+          h5.card-title.text-primary.fw-bold.mb-0
+            span.me-2 ↓
+            | Sell Dog Bones
+          .market-summary
+            .market-summary__item
+              p.market-label You Have
+              h4.market-value
+                span.me-2 🦴
+                = number_with_delimiter(dog_bones)
+            .market-summary__item
+              p.market-label You Receive
+              h4.market-value
+                span.me-2 🪙
+                span data-marketplace-slider-target="received" 0
+
+          = simple_form_for :marketplace,
+            url: marketplace_create_path,
+            method: :post,
+            html: { class: "d-flex flex-column gap-3" } do |f|
+            .market-field
+              = f.label :dog_bones, "Amount to sell", class: "market-label mb-2"
+              .d-flex.align-items-center.gap-3
+                span.market-resource-icon 🦴
+                = f.input_field :dog_bones,
+                  as: :range,
+                  min: 0,
+                  max: dog_bones,
+                  value: 0,
+                  class: "form-range market-range",
+                  data: { marketplace_slider_target: "range", action: "input->marketplace-slider#syncFromRange" }
+                .market-number-wrap.col-4
+                  = f.input_field :dog_bones_amount,
+                    as: :integer,
+                    min: 0,
+                    max: dog_bones,
+                    value: 0,
+                    class: "form-control market-number",
+                    data: { marketplace_slider_target: "number", action: "input->marketplace-slider#syncFromNumber" }
+                  span.market-max
+                    | /
+                    = number_with_delimiter(dog_bones)
+
+            .market-total
+              span Total Received
+              strong
+                span.me-1 🪙
+                span data-marketplace-slider-target="total" 0
+
+            = f.button :submit, "Sell Dog Bones", class: "btn btn-primary w-100 market-submit"
+            
+      .card.border-2.border-secondary.bg-secondary.bg-opacity-25.col-12.col-md-8.col-lg-5
+        .card-body.d-flex.flex-column.gap-3 data={ controller: "marketplace-buy-slider", "marketplace-buy-slider-rate-value": @price }
+          h5.card-title.text-secondary.fw-bold.mb-0
+            span.me-2 ↓
+            | Buy Dog Bones
+
+          .market-summary
+            .market-summary__item
+              p.market-label You Have
+              h4.market-value-2
+                span.me-2 🦴
+                = number_with_delimiter(dog_bones)
+            .market-summary__item
+              p.market-label You Receive
+              h4.market-value-2
+                span.me-2 🪙
+                span data-marketplace-buy-slider-target="received" 0
+
+          = simple_form_for :marketplace,
+            url: marketplace_create_path,
+            method: :post,
+            html: { class: "d-flex flex-column gap-3" } do |f|
+            .market-field
+              = f.label :dog_bones, "Amount to sell", class: "market-label mb-2"
+              .d-flex.align-items-center.gap-3
+                span.market-resource-icon 🦴
+                = f.input_field :dog_bones,
+                  as: :range,
+                  min: 0,
+                  max: dog_bones,
+                  value: 0,
+                  class: "form-range market-range",
+                  data: { marketplace_slider_target: "range", action: "input->marketplace-slider#syncFromRange" }
+                .market-number-wrap.col-4
+                  = f.input_field :dog_bones_amount,
+                    as: :integer,
+                    min: 0,
+                    max: dog_bones,
+                    value: 0,
+                    class: "form-control market-number",
+                    data: { marketplace_slider_target: "number", action: "input->marketplace-slider#syncFromNumber" }
+                  span.market-max
+                    | /
+                    = number_with_delimiter(dog_bones)
+
+            .market-total
+              span Total Received
+              strong
+                span.me-1 🪙
+                span data-marketplace-slider-target="total" 0
+
+            = f.button :submit, "Buy Dog Bones", class: "btn btn-secondary w-100 market-submit"
+  - else
+    .d-flex.col-12.justify-content-center
+      h2 Market Place not build yet, you need market place to buy and sell resources

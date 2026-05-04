@@ -29,8 +29,12 @@ html
               = message
             button.btn-close.btn-close-white.me-2.m-auto type="button" data-bs-dismiss="toast"
     = render "layouts/navbar" if current_user
-    = turbo_frame_tag "resources_bar" do 
-        = render "layouts/resources_bar" if current_user
+    - if current_user
+      = turbo_frame_tag "resources_bar",
+        src: resource_bar_show_path, 
+        data: { controller: "resource-bar" } do 
+          = render "layouts/resources_bar"
+     
     - if controller_name == "sessions" || controller_name == "users"
       = yield
     - else

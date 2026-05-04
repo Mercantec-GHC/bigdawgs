@@ -24,6 +24,10 @@ $headings-font-weight: 500;
   width: auto;
 }
 
+.font-size-14 {
+  font-size: 0.875rem;
+}
+
 // .game-navbar {
 //   position: relative;
 //   height: 110px; // match dit billede
@@ -40,7 +44,7 @@ $headings-font-weight: 500;
 // }
 
 .game-navbar {
-  position: sticky;
+  // position: sticky;
   top: 0;
   opacity: 0.80;
   z-index: 1000;
@@ -281,7 +285,7 @@ body {
     radial-gradient(circle at 50% 20%, rgba(255,255,255,0.03), transparent 40%),
     linear-gradient(180deg, #0c0d10 0%, #08090c 45%, #050608 100%);
   position: relative;
-  overflow: hidden;
+  overflow: auto;
 }
 
 .game-bg::before {
@@ -322,4 +326,103 @@ body {
   background: image-url("scratches.png") center/cover no-repeat;
   opacity: 0.18;
   pointer-events: none;
+}
+
+
+
+.market-summary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.market-summary__item {
+  min-height: 92px;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.32);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 4px;
+}
+
+.market-label {
+  color: #c7c2ba;
+  font-size: 0.82rem;
+  margin-bottom: 0.35rem;
+}
+
+.market-value {
+  color: #f1bc57;
+  font-weight: 700;
+  margin: 0;
+}
+.market-value-2 {
+  color: #0054f0;
+  font-weight: 700;
+  margin: 0;
+}
+
+.market-resource-icon {
+  flex: 0 0 auto;
+}
+
+.market-range {
+  min-width: 0;
+}
+
+.market-range::-webkit-slider-thumb {
+  background: #f2bf57;
+}
+
+.market-range::-moz-range-thumb {
+  background: #f2bf57;
+  border: 0;
+}
+
+.market-number-wrap {
+  display: flex;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+}
+
+.market-number {
+  color: #fff;
+  background: transparent;
+  border: 0;
+  text-align: center;
+}
+
+.market-number:focus {
+  color: #fff;
+  background: transparent;
+  box-shadow: none;
+}
+
+.market-max {
+  color: #ded8cd;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+.market-total {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #c7c2ba;
+  font-size: 0.9rem;
+}
+
+.market-total strong {
+  color: #f1bc57;
+}
+
+// .market-submit {
+//   border: 0;
+//   border-radius: 6px;
+//   background: linear-gradient(180deg, #a47a31, #7f5d22);
+// }
+
+.market-submit:hover {
+  background: linear-gradient(180deg, #b88a3a, #8d6828);
 }
