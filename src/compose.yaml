@@ -25,6 +25,8 @@ services:
       RAILS_ENV: development
       DATABASE_URL: ${DATABASE_URL}
       JWT_SECRET: ${JWT_SECRET}
+      ENGINE_BASE_URL: ${ENGINE_BASE_URL}
+      MARKETPLACE_BASE_URL: ${MARKETPLACE_BASE_URL}
     ports:
       - "7000:7000"
     depends_on:
