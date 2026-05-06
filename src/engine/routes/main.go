@@ -4,6 +4,7 @@ import (
 	"bigdawgs/handlers"
 	"bigdawgs/handlers/buildings"
 	"bigdawgs/handlers/resources"
+	"bigdawgs/handlers/transactions"
 	"fmt"
 	"net/http"
 
@@ -16,6 +17,7 @@ func Register(mux *http.ServeMux, db *gorm.DB) {
 	mux.HandleFunc("/healthz", handlers.HealthzHandler)
 	/* Buildings routes */
 	mux.Handle("GET /buildings", auth(buildings.ListBuildingsHandler(db)))
+	mux.Handle("GET /buildings/{building}", auth(buildings.GetSpecificBuilding(db)))
 	mux.Handle("POST /buildings/create", auth(buildings.CreateDefaultBuilding(db)))
 	mux.Handle("POST /buildings/{building}/upgrade", auth(buildings.UpgradeBuilding(db)))
 	mux.Handle("POST /buildings/{building}/create", auth(buildings.CreateBuilding(db)))
@@ -25,6 +27,9 @@ func Register(mux *http.ServeMux, db *gorm.DB) {
 	mux.Handle("POST /resources/create", auth(resources.CreateDefaultResourceBag(db)))
 	mux.Handle("GET /resources/getBag", auth(resources.GetResourceBag(db)))
 	mux.Handle("DELETE /resources/deleteBag", auth(resources.DeleteResourceBag(db)))
+
+	/* Transaction routes */
+	mux.Handle("POST /transaction/trade", auth(transactions.TradeResources(db)))
 }
 
 func ListenAndServe(port string, db *gorm.DB) error {

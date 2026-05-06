@@ -17,6 +17,14 @@ type ResourceBag struct {
 	Amount      int64  `gorm:"not null;default:0"`
 }
 
+func IsValidResourceKey(key string) bool {
+	switch ResourceKey(key) {
+	case ResourceDogCoin, ResourceDogBone, ResourceDog:
+		return true
+	}
+	return false
+}
+
 func DefaultResourceBalances(userID uint) []ResourceBag {
 	return []ResourceBag{
 		{User_id: userID, ResourceKey: string(ResourceDogCoin), Amount: 0},
