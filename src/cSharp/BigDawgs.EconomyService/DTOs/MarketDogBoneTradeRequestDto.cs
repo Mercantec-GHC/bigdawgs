@@ -7,6 +7,6 @@ public class MarketDogBoneTradeRequestDto
 
 public class MarketDogBoneTradeDto
 {
-    public string Type { get; set; } = string.Empty; // buy or sell
+    public string Type { get; set; } = string.Empty; 
     public int Amount { get; set; }
 }

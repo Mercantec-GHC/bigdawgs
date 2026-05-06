@@ -86,6 +86,7 @@ public class MarketService
         demand = Math.Max(0, demand);
 
         var safeSupply = Math.Max(1, supply);
+
         var demandSupplyRatio = (decimal)demand / safeSupply;
 
         var marketFactor = 1m + ((demandSupplyRatio - 1m) * Balancing.Sensitivity);
@@ -96,11 +97,11 @@ public class MarketService
             Balancing.MaxMarketFactor
         );
 
-        var rawPrice = previousPrice * marketFactor;
+        var targetPrice = basePrice * marketFactor;
 
         var smoothedPrice =
             previousPrice * Balancing.PreviousPriceWeight +
-            rawPrice * Balancing.NewPriceWeight;
+            targetPrice * Balancing.NewPriceWeight;
 
         var minPrice = basePrice * Balancing.MinPriceMultiplier;
         var maxPrice = basePrice * Balancing.MaxPriceMultiplier;
