@@ -12,4 +12,10 @@ public class MarketDogBonePriceDto
 {
     [JsonPropertyName("current_dog_coins_price")]
     public decimal CurrentDogCoinsPrice { get; set; }
+
+    [JsonPropertyName("price_at_trade")]
+    public decimal? PriceAtTrade { get; set; }
+
+    [JsonPropertyName("trade_value")]
+    public decimal? TradeValue { get; set; }
 }

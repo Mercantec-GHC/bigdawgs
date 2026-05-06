@@ -21,13 +21,15 @@ public class MarketService
 
     private readonly List<MarketTradeHistory> _tradeHistory = new();
 
-    public MarketDogBonePriceResponseDto GetPrices()
+    public MarketDogBonePriceResponseDto GetPrices(decimal? priceAtTrade = null, decimal? tradeValue = null)
     {
         return new MarketDogBonePriceResponseDto
         {
             Resources = new MarketDogBonePriceDto
             {
-                CurrentDogCoinsPrice = _currentDogCoinsPrice
+                CurrentDogCoinsPrice = _currentDogCoinsPrice,
+                PriceAtTrade = priceAtTrade,
+                TradeValue = tradeValue
             }
         };
     }
@@ -38,14 +40,14 @@ public class MarketService
         var type = trade.Type.Trim().ToLower();
 
         if (type != "buy" && type != "sell")
-        {
             throw new ArgumentException("Type must be either 'buy' or 'sell'.");
-        }
 
         if (trade.Amount <= 0)
-        {
             throw new ArgumentException("Amount must be higher than 0.");
-        }
+
+        var priceBeforeTrade = _currentDogCoinsPrice;
+
+        var tradeValue = priceBeforeTrade * trade.Amount;
 
         if (type == "buy")
         {
@@ -69,7 +71,7 @@ public class MarketService
         {
             Type = type,
             Amount = trade.Amount,
-            PriceAtTrade = _currentDogCoinsPrice,
+            PriceAtTrade = priceBeforeTrade,
             SupplyAfterTrade = _dogBoneSupply,
             DemandAfterTrade = _dogBoneDemand,
             CreatedAt = DateTime.UtcNow
@@ -77,7 +79,7 @@ public class MarketService
 
         UpdatePriceHistory(DogCoins, _currentDogCoinsPrice);
 
-        return GetPrices();
+        return GetPrices(priceBeforeTrade, tradeValue);
     }
 
     private static decimal CalculatePrice(decimal basePrice, decimal previousPrice, int supply, int demand)
