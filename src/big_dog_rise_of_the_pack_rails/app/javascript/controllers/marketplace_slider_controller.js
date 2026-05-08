@@ -21,7 +21,7 @@ export default class extends Controller {
   sync(value) {
     const max = Number(this.rangeTarget.max)
     const amount = Math.min(Math.max(Number(value) || 0, 0), max)
-    const received = amount * this.rateValue
+    const received = Math.floor(amount * this.rateValue)
 
     this.rangeTarget.value = amount
     this.numberTarget.value = amount

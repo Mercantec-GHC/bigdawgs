@@ -11,7 +11,7 @@
       .d-flex.flex-column.align-items-center.col-6.mb-2
         = image_tag building.image_path, alt: building.name, class: "card-img-top img-fluid"
         - if building.is_constructing 
-          p.card-text.my-2 Time left: 10:10
+          p.card-text.my-2 id="#{building.name}_construction_text" data={ controller: "construction", "construction-endtime-value": building.construction_time_left } = "Time left: #{building.construction_time_left.floor} seconds"
 
     .d-flex.justify-content-center.mb-2
       - if building.is_constructing

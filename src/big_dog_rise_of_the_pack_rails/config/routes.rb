@@ -1,8 +1,12 @@
 Rails.application.routes.draw do
   get "marketplace/show"
   post "marketplace/create"
+  get "marketplace/market_history"
   get "resource_bar/show"
+  get "maps/tile_popup"
+  post "sessions/logout", to: "sessions#logout"
   resources :building
+  resource :map, only: %i[show new create]
   resource :session, only: %i[ new create show ]
   resources :users, only: %i[new create]
   root to: "home#index"

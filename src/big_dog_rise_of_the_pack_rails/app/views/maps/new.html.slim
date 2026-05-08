@@ -1,0 +1,6 @@
+.d-flex.flex-column [data-controller="map-popup"]
+  = turbo_frame_tag "placement_popup", class: "tile-popup-frame", data: {map_popup_target: "popup" }
+  d.flex.text-center
+    h1.text-white.fw-bold Map
+    h4.text-white Select placement on the map
+  = render "map"

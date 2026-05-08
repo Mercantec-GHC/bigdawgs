@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_04_22_082852) do
+ActiveRecord::Schema[8.0].define(version: 2026_05_06_085237) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -20,26 +20,38 @@ ActiveRecord::Schema[8.0].define(version: 2026_04_22_082852) do
     t.timestamptz "deleted_at"
     t.bigint "user_id", null: false
     t.text "key", null: false
-    t.bigint "level", default: 1, null: false
+    t.bigint "level", default: 0, null: false
     t.bigint "count", default: 1, null: false
     t.boolean "is_constructing", default: false, null: false
     t.timestamptz "started_at"
     t.timestamptz "completes_at"
+    t.bigint "upgrade_cost_dog_coins", default: 0, null: false
+    t.bigint "upgrade_cost_dog_bones", default: 0, null: false
+    t.bigint "upgrade_cost_dogs", default: 0, null: false
     t.index ["deleted_at"], name: "idx_buildings_deleted_at"
     t.index ["user_id", "key"], name: "idx_user_building_key", unique: true
+    t.index ["user_id"], name: "idx_buildings_user_id"
   end
 
-  create_table "resource_balances", force: :cascade do |t|
+  create_table "resource_bags", force: :cascade do |t|
     t.timestamptz "created_at"
     t.timestamptz "updated_at"
     t.timestamptz "deleted_at"
     t.bigint "user_id", null: false
     t.text "resource_key", null: false
     t.bigint "amount", default: 0, null: false
-    t.bigint "capacity", default: 0, null: false
-    t.index ["deleted_at"], name: "idx_resource_balances_deleted_at"
-    t.index ["resource_key"], name: "idx_user_resource_key", unique: true
-    t.index ["user_id"], name: "idx_resource_balances_user_id"
+    t.index ["deleted_at"], name: "idx_resource_bags_deleted_at"
+    t.index ["user_id", "resource_key"], name: "idx_user_resource_key", unique: true
+    t.index ["user_id"], name: "idx_resource_bags_user_id"
+  end
+
+  create_table "settlements", force: :cascade do |t|
+    t.string "x"
+    t.string "y"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_settlements_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -49,4 +61,6 @@ ActiveRecord::Schema[8.0].define(version: 2026_04_22_082852) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  add_foreign_key "settlements", "users"
 end

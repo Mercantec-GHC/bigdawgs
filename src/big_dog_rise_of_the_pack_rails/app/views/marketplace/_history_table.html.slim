@@ -1,0 +1,10 @@
+table.table.table-striped
+        tbody
+          - 5.times do |index|
+            - transaction  = @market_history[index]
+              tr
+                td= transaction.created_at.strftime("%Y-%m-%d %H:%M") if transaction.respond_to?(:created_at)
+                td= transaction.player_name
+                td= number_to_currency(transaction.price) if transaction.respond_to?(:price)
+                td= 🦴
+                td= 🪙

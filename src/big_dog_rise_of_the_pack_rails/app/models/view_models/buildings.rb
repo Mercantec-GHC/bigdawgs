@@ -12,13 +12,13 @@ module ViewModels
     def create_buildings
       building_data.each do |building_data|
         case building_data.fetch('Key')
-        when 'kennel'
+        when 'the_dog_kennel'
           @kennel = Domain::Kennel.new(building_data)
           buildings << @kennel
         when 'the_doghouse'
           @the_doghouse = Domain::TheDoghouse.new(building_data)
           buildings << @the_doghouse
-        when 'dog_bone_factory'
+        when 'meat_factory'
           @dog_bone_factory = Domain::DogBoneFactory.new(building_data)
           buildings << @dog_bone_factory
         when 'dog_coin_den'

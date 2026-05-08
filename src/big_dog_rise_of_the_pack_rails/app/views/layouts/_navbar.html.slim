@@ -18,12 +18,24 @@ nav.game-navbar.mt-1
         span.game-navbar__icon 🪙
         span Marketplace
 
-      = link_to "#", class: "game-navbar__item" do
+      = link_to map_path, class: "game-navbar__item #{current_page?(map_path) ? 'game-navbar__item--active' : ''}" do
         span.game-navbar__icon 🗺️
-        span Explore
+        span map
 
 
-    .game-navbar__right
-      = link_to "#", class: "game-navbar__profile" do
+    .game-navbar__right.dropdown
+      a.game-navbar__profile.dropdown-toggle[
+        href="#"
+        role="button"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      ]
         span.game-navbar__profile-avatar 🐺
         span.game-navbar__profile-name Profile
+
+      ul.dropdown-menu.dropdown-menu-end.dropdown-menu-dark.bg-dark.bg-opacity-75.border.border-warning.shadow-lg.mt-2.rounded-3
+        li
+          = button_to "Logout",
+            sessions_logout_path,
+            method: :post,
+            class: "dropdown-item text-start w-100 border-0 bg-transparent"

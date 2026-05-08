@@ -1,0 +1,35 @@
+= turbo_frame_tag "placement_popup" do
+  .tile-popup
+    button.tile-popup__close (data-action="click->map-popup#close") ×
+
+    .tile-popup__badge 🐺
+    - if @free
+      - if current_user.settlements.count > 0
+        h3 NEUTRAL TERRITORY
+
+        p No pack controls this area.
+        p One day you might expande to this wasteland.
+        p = "Location x: #{@x} y: #{@y}"
+      - else
+        h3 NEUTRAL TERRITORY
+
+        p No pack controls this area.
+        p Build your settlement here to begin expanding your influence across the wastelands.
+        p = "Location x: #{@x} y: #{@y}"
+
+        = button_to "⚒ FOUND SETTLEMENT",
+          map_path(x: @x, y: @y),
+          method: :post,
+          data: { turbo_frame: "_top" },
+          class: "tile-popup__button"
+    - else
+      h3 ="#{@base_name} base"
+
+      p = "This territory is under the control of #{@base_name} Pack"
+      p = "The Doghouse level is: "
+      p = "Location x: #{@x} y: #{@y}"
+ 
+      / = button_to "⚒ FOUND SETTLEMENT",
+      /   "#",
+      /   method: :post,
+      /   class: "tile-popup__button, disable"

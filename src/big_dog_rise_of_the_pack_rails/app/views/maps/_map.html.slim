@@ -1,0 +1,9 @@
+.map
+  - 100.times do|index|
+    - x = index % 10
+    - y = "#{index / 10}".to_i
+    - location = [x, y]
+    - background = @all_players_locations.include?(location) ? "player" : rand(1..4)
+    - player_location = current_user.settlements&.first&.location_array == location ?  "player_location" : " "
+    = link_to maps_tile_popup_path(y: y, x:  x), class: "map-tile bg-tile-#{background} #{player_location}", data: { turbo_frame: "placement_popup", action: "click->map-popup#move"} do
+      span.visually-hidden Empty tile
