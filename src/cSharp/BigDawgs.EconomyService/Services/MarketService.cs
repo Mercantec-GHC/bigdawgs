@@ -34,7 +34,9 @@ public class MarketService
         };
     }
 
-    public MarketDogBonePriceResponseDto HandleTrade(MarketDogBoneTradeRequestDto request)
+    public MarketDogBonePriceResponseDto HandleTrade(
+        MarketDogBoneTradeRequestDto request,
+        string userId = "bot")
     {
         var trade = request.Resources;
         var type = trade.Type.Trim().ToLower();
@@ -69,13 +71,20 @@ public class MarketService
 
         _tradeHistory.Add(new MarketTradeHistory
         {
+            UserId = userId,
             Type = type,
             Amount = trade.Amount,
             PriceAtTrade = priceBeforeTrade,
+            TradeValue = tradeValue,
             SupplyAfterTrade = _dogBoneSupply,
             DemandAfterTrade = _dogBoneDemand,
             CreatedAt = DateTime.UtcNow
         });
+
+        if (_tradeHistory.Count > 20)
+        {
+            _tradeHistory.RemoveAt(0);
+        }
 
         UpdatePriceHistory(DogCoins, _currentDogCoinsPrice);
 
@@ -130,12 +139,38 @@ public class MarketService
 
     private class MarketTradeHistory
     {
+        public string UserId { get; set; } = string.Empty;
         public string Type { get; set; } = string.Empty;
         public int Amount { get; set; }
         public decimal PriceAtTrade { get; set; }
+        public decimal TradeValue { get; set; }
         public int SupplyAfterTrade { get; set; }
         public int DemandAfterTrade { get; set; }
         public DateTime CreatedAt { get; set; }
+    }
+
+    public MarketTradeHistoryResponseDto GetTradeHistory(int limit = 20)
+    {
+        limit = Math.Clamp(limit, 1, 20);
+
+        return new MarketTradeHistoryResponseDto
+        {
+            Resources = _tradeHistory
+                .OrderByDescending(x => x.CreatedAt)
+                .Take(limit)
+                .Select(x => new MarketTradeHistoryDto
+                {
+                    UserId = x.UserId,
+                    Type = x.Type,
+                    Amount = x.Amount,
+                    PriceAtTrade = x.PriceAtTrade,
+                    TradeValue = x.TradeValue,
+                    SupplyAfterTrade = x.SupplyAfterTrade,
+                    DemandAfterTrade = x.DemandAfterTrade,
+                    CreatedAt = x.CreatedAt
+                })
+                .ToList()
+        };
     }
 
     public class PriceBalancingSettings
