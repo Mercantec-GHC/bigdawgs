@@ -16,6 +16,12 @@ class SessionsController < ApplicationController
     end
   end
 
+  def logout
+    puts "Logging out user with ID: #{session[:user_id]}"
+    session.delete(:user_id)
+    redirect_to root_path, notice: "Logged out successfully."
+  end
+
   private
 
   def session_params

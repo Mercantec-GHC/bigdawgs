@@ -1,0 +1,5 @@
+.d-flex.flex-column [data-controller="map-popup"]
+  = turbo_frame_tag "placement_popup", class: "tile-popup-frame", data: {map_popup_target: "popup" }
+  d.flex.justify-content-center.mb-2
+    h1.text-primary.fw-bold.text-center Map 
+  = render "map"

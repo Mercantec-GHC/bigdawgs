@@ -9,6 +9,8 @@ html
     = stylesheet_link_tag "application", "data-turbo-track": "reload"
     link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
     link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet"
+    script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+
 
     = csrf_meta_tags
     = csp_meta_tag
@@ -22,14 +24,14 @@ html
   body class=("game-shell #{'game-bg' unless controller_name.in?(%w[sessions users])}")
     .toast-container.position-fixed.top-0.end-0.p-3 style="z-index: 1100;"
       - flash.each do |type, message|
-        - bg = type.to_s == "notice" ? "bg-success" : "bg-danger"
+        - bg = type.to_s == "notice" || type.to_s == "success" ? "bg-success" : "bg-danger"
         .toast.align-items-center.text-white.border-0 class=bg role="alert" data-bs-delay="3000"
           .d-flex
             .toast-body
               = message
             button.btn-close.btn-close-white.me-2.m-auto type="button" data-bs-dismiss="toast"
     = render "layouts/navbar" if current_user
-    - if current_user
+    - if current_user && current_user.settlements.any?
       = turbo_frame_tag "resources_bar",
         src: resource_bar_show_path, 
         data: { controller: "resource-bar" } do 
@@ -40,4 +42,3 @@ html
     - else
       .container.mt-4
         = yield
-    script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

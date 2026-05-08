@@ -1,6 +1,6 @@
 class User < ApplicationRecord
   has_secure_password
-
+  has_many :settlements, dependent: :destroy
   validates :email, presence: true, uniqueness: true
   validates :name, presence: true
   validates :password, length: { minimum: 6 }, if: -> { password.present? }
@@ -15,5 +15,4 @@ class User < ApplicationRecord
   def cashed_resources
     Rails.cache.read([:resource_data, id])
   end
-  
 end

@@ -10,7 +10,6 @@
               br
               | Big dawg!
             p.text-center.mb-2 The pack awaits you.
-
             = simple_form_for :session, url: session_path, html: { class: "d-grid gap-3" } do |f|
               = render "shared/alert_flash"
               = f.input :email,

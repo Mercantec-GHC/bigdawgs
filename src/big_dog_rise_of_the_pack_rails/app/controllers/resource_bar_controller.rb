@@ -5,7 +5,6 @@ class ResourceBarController < ApplicationController
     @dog_bones = resource_bag.fetch("dogbones")&.fetch("Amount", 0) || 0
     @dog_coins = resource_bag.fetch("dogcoin")&.fetch("Amount", 0) || 0
     @dogs = resource_bag.fetch("dogs")&.fetch("Amount", 0) || 0
-
-    Rails.cache.write([:resource_data, current_user.id], { dog_bones: @dog_bones, dog_coins: @dog_coins, dogs: @dogs }, expires_in: 15.seconds)
+    Rails.cache.write([:resource_data, current_user.id], { "dog_bones" => @dog_bones, "dog_coins" => @dog_coins, "dogs" => @dogs }, expires_in: 15.seconds)
   end
 end

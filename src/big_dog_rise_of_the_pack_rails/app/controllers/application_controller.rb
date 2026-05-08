@@ -8,6 +8,12 @@ class ApplicationController < ActionController::Base
   end
 
   def require_login
-    redirect_to session_path unless current_user
+    if current_user
+      if current_user.settlements.empty?
+        redirect_to new_map_path
+      end
+    else
+      redirect_to session_path 
+    end
   end
 end
