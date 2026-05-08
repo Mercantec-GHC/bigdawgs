@@ -54,6 +54,7 @@ services:
     environment:
       ASPNETCORE_URLS: http://0.0.0.0:8080
       ConnectionStrings__Postgres: Host=postgres;Port=5432;Database=bigdawgs;Username=bigdawgs;Password=bigdawgs
+      JWT_SECRET: ${JWT_SECRET}
     ports:
       - "8080:8080"
     depends_on:
