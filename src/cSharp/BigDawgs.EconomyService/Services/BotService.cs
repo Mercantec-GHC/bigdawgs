@@ -20,7 +20,7 @@ public class BotService
         return _marketService.HandleTrade(new MarketDogBoneTradeRequestDto
         {
             Resources = trade
-        });
+        }, "bot");
     }
 
     private static MarketDogBoneTradeDto DecideBotTrade(decimal currentPrice)

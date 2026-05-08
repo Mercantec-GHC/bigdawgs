@@ -8,12 +8,16 @@ public class MarketService
 
     private const string DogCoins = "DogCoins";
 
-    private static readonly Dictionary<string, List<decimal>> PriceHistory = new(StringComparer.OrdinalIgnoreCase);
+    private readonly object _lock = new();
 
-    private static readonly Dictionary<string, decimal> BasePrices = new(StringComparer.OrdinalIgnoreCase)
-    {
-        [DogCoins] = 5m
-    };
+    private readonly Dictionary<string, List<decimal>> PriceHistory =
+        new(StringComparer.OrdinalIgnoreCase);
+
+    private static readonly Dictionary<string, decimal> BasePrices =
+        new(StringComparer.OrdinalIgnoreCase)
+        {
+            [DogCoins] = 5m
+        };
 
     private int _dogBoneSupply = 100;
     private int _dogBoneDemand = 100;
@@ -23,63 +27,85 @@ public class MarketService
 
     public MarketDogBonePriceResponseDto GetPrices(decimal? priceAtTrade = null, decimal? tradeValue = null)
     {
-        return new MarketDogBonePriceResponseDto
+        lock (_lock)
         {
-            Resources = new MarketDogBonePriceDto
+            return new MarketDogBonePriceResponseDto
             {
-                CurrentDogCoinsPrice = _currentDogCoinsPrice,
-                PriceAtTrade = priceAtTrade,
-                TradeValue = tradeValue
-            }
-        };
+                Resources = new MarketDogBonePriceDto
+                {
+                    CurrentDogCoinsPrice = _currentDogCoinsPrice,
+                    PriceAtTrade = priceAtTrade,
+                    TradeValue = tradeValue
+                }
+            };
+        }
     }
 
-    public MarketDogBonePriceResponseDto HandleTrade(MarketDogBoneTradeRequestDto request)
+    public MarketDogBonePriceResponseDto HandleTrade(
+        MarketDogBoneTradeRequestDto request,
+        string userId = "bot")
     {
-        var trade = request.Resources;
-        var type = trade.Type.Trim().ToLower();
-
-        if (type != "buy" && type != "sell")
-            throw new ArgumentException("Type must be either 'buy' or 'sell'.");
-
-        if (trade.Amount <= 0)
-            throw new ArgumentException("Amount must be higher than 0.");
-
-        var priceBeforeTrade = _currentDogCoinsPrice;
-
-        var tradeValue = priceBeforeTrade * trade.Amount;
-
-        if (type == "buy")
+        lock (_lock)
         {
-            _dogBoneDemand += trade.Amount;
-            _dogBoneSupply = Math.Max(0, _dogBoneSupply - trade.Amount);
+            var trade = request.Resources;
+            var type = trade.Type.Trim().ToLower();
+
+            if (type != "buy" && type != "sell")
+                throw new ArgumentException("Type must be either 'buy' or 'sell'.");
+
+            if (trade.Amount <= 0)
+                throw new ArgumentException("Amount must be higher than 0.");
+
+            var priceBeforeTrade = _currentDogCoinsPrice;
+            var tradeValue = priceBeforeTrade * trade.Amount;
+
+            if (type == "buy")
+            {
+                _dogBoneDemand += trade.Amount;
+                _dogBoneSupply = Math.Max(0, _dogBoneSupply - trade.Amount);
+            }
+            else
+            {
+                _dogBoneSupply += trade.Amount;
+                _dogBoneDemand = Math.Max(0, _dogBoneDemand - trade.Amount);
+            }
+
+            _currentDogCoinsPrice = CalculatePrice(
+                BasePrices[DogCoins],
+                _currentDogCoinsPrice,
+                _dogBoneSupply,
+                _dogBoneDemand
+            );
+
+            _tradeHistory.Add(new MarketTradeHistory
+            {
+                UserId = userId,
+                Type = type,
+                Amount = trade.Amount,
+                PriceAtTrade = priceBeforeTrade,
+                TradeValue = tradeValue,
+                SupplyAfterTrade = _dogBoneSupply,
+                DemandAfterTrade = _dogBoneDemand,
+                CreatedAt = DateTime.UtcNow
+            });
+
+            if (_tradeHistory.Count > 20)
+            {
+                _tradeHistory.RemoveAt(0);
+            }
+
+            UpdatePriceHistory(DogCoins, _currentDogCoinsPrice);
+
+            return new MarketDogBonePriceResponseDto
+            {
+                Resources = new MarketDogBonePriceDto
+                {
+                    CurrentDogCoinsPrice = _currentDogCoinsPrice,
+                    PriceAtTrade = priceBeforeTrade,
+                    TradeValue = tradeValue
+                }
+            };
         }
-        else
-        {
-            _dogBoneSupply += trade.Amount;
-            _dogBoneDemand = Math.Max(0, _dogBoneDemand - trade.Amount);
-        }
-
-        _currentDogCoinsPrice = CalculatePrice(
-            BasePrices[DogCoins],
-            _currentDogCoinsPrice,
-            _dogBoneSupply,
-            _dogBoneDemand
-        );
-
-        _tradeHistory.Add(new MarketTradeHistory
-        {
-            Type = type,
-            Amount = trade.Amount,
-            PriceAtTrade = priceBeforeTrade,
-            SupplyAfterTrade = _dogBoneSupply,
-            DemandAfterTrade = _dogBoneDemand,
-            CreatedAt = DateTime.UtcNow
-        });
-
-        UpdatePriceHistory(DogCoins, _currentDogCoinsPrice);
-
-        return GetPrices(priceBeforeTrade, tradeValue);
     }
 
     private static decimal CalculatePrice(decimal basePrice, decimal previousPrice, int supply, int demand)
@@ -111,7 +137,7 @@ public class MarketService
         return Math.Round(Math.Clamp(smoothedPrice, minPrice, maxPrice), 2);
     }
 
-    private static List<decimal> UpdatePriceHistory(string resourceType, decimal currentPrice)
+    private List<decimal> UpdatePriceHistory(string resourceType, decimal currentPrice)
     {
         if (!PriceHistory.ContainsKey(resourceType))
         {
@@ -130,12 +156,41 @@ public class MarketService
 
     private class MarketTradeHistory
     {
+        public string UserId { get; set; } = string.Empty;
         public string Type { get; set; } = string.Empty;
         public int Amount { get; set; }
         public decimal PriceAtTrade { get; set; }
+        public decimal TradeValue { get; set; }
         public int SupplyAfterTrade { get; set; }
         public int DemandAfterTrade { get; set; }
         public DateTime CreatedAt { get; set; }
+    }
+
+    public MarketTradeHistoryResponseDto GetTradeHistory(int limit = 20)
+    {
+        lock (_lock)
+        {
+            limit = Math.Clamp(limit, 1, 20);
+
+            return new MarketTradeHistoryResponseDto
+            {
+                Resources = _tradeHistory
+                    .OrderByDescending(x => x.CreatedAt)
+                    .Take(limit)
+                    .Select(x => new MarketTradeHistoryDto
+                    {
+                        UserId = x.UserId,
+                        Type = x.Type,
+                        Amount = x.Amount,
+                        PriceAtTrade = x.PriceAtTrade,
+                        TradeValue = x.TradeValue,
+                        SupplyAfterTrade = x.SupplyAfterTrade,
+                        DemandAfterTrade = x.DemandAfterTrade,
+                        CreatedAt = x.CreatedAt
+                    })
+                    .ToList()
+            };
+        }
     }
 
     public class PriceBalancingSettings
@@ -162,34 +217,40 @@ public class MarketService
         return HandleTrade(new MarketDogBoneTradeRequestDto
         {
             Resources = botTrade
-        });
+        }, "bot");
     }
 
     private MarketDogBoneTradeDto? DecideBotTrade()
     {
-        if (_currentDogCoinsPrice <= 4m)
+        lock (_lock)
         {
-            return new MarketDogBoneTradeDto
+            if (_currentDogCoinsPrice <= 4m)
             {
-                Type = "buy",
-                Amount = 10
-            };
-        }
+                return new MarketDogBoneTradeDto
+                {
+                    Type = "buy",
+                    Amount = 10
+                };
+            }
 
-        if (_currentDogCoinsPrice >= 8m)
-        {
-            return new MarketDogBoneTradeDto
+            if (_currentDogCoinsPrice >= 8m)
             {
-                Type = "sell",
-                Amount = 10
-            };
-        }
+                return new MarketDogBoneTradeDto
+                {
+                    Type = "sell",
+                    Amount = 10
+                };
+            }
 
-        return null;
+            return null;
+        }
     }
 
     public decimal GetCurrentDogCoinsPrice()
     {
-        return _currentDogCoinsPrice;
+        lock (_lock)
+        {
+            return _currentDogCoinsPrice;
+        }
     }
 }

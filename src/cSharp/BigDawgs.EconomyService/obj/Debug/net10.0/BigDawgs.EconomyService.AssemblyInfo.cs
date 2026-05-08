@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BigDawgs.EconomyService")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+00ca9b5abadcb2cec905366a7a76400e45385917")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+11e726f145924b492916f0288e019675d8b36614")]
 [assembly: System.Reflection.AssemblyProductAttribute("BigDawgs.EconomyService")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BigDawgs.EconomyService")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
