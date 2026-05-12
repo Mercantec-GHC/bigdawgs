@@ -1,7 +1,7 @@
 class MarketplaceController < ApplicationController
   def show
     @market_place = buildings = FaradayService.fetch_data("/buildings", token: current_user.encoded_json_web_token).find{|building| building["Key"] == "market" }
-    @price = FaradayService.fetch_data("/market/prices", connection_type: "MARKETPLACE_BASE_URL").fetch("Resources").fetch("current_dog_coins_price")
+    @price = FaradayService.fetch_data("/market/prices",token: current_user.encoded_json_web_token, connection_type: "MARKETPLACE_BASE_URL").fetch("Resources").fetch("current_dog_coins_price")
     @dog_bones = current_user.cashed_resources&.fetch("dog_bones", 0).to_i
     @dog_coins = current_user.cashed_resources&.fetch("dog_coins", 0).to_i
   end
