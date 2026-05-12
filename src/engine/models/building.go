@@ -32,6 +32,7 @@ type Production struct {
 type BuildingDefinition struct {
 	Key            BuildingKey
 	DisplayName    string
+	Produces       string
 	BaseProduction Production
 	BaseCost       Production
 }
@@ -40,24 +41,28 @@ var BuildingDefinitions = map[BuildingKey]BuildingDefinition{
 	MeatFactory: {
 		Key:            MeatFactory,
 		DisplayName:    "Meat Factory",
+		Produces:       string(ResourceDogBone),
 		BaseProduction: Production{DogBones: 10},
 		BaseCost:       Production{DogBones: 100, DogCoins: 50, Dogs: 5},
 	},
 	DogCoinDen: {
 		Key:            DogCoinDen,
 		DisplayName:    "Dog Coin Den",
+		Produces:       string(ResourceDogCoin),
 		BaseProduction: Production{DogCoins: 5},
 		BaseCost:       Production{DogBones: 200, DogCoins: 100, Dogs: 10},
 	},
 	Doghouse: {
 		Key:            Doghouse,
 		DisplayName:    "The Doghouse",
+		Produces:       string(ResourceDog),
 		BaseProduction: Production{Dogs: 2},
 		BaseCost:       Production{DogBones: 300, DogCoins: 150, Dogs: 20},
 	},
 	DogKennel: {
 		Key:         DogKennel,
 		DisplayName: "The DogKennel",
+		Produces:    string(ResourceDog),
 		BaseCost:    Production{DogBones: 150, DogCoins: 75},
 	},
 	Market: {
@@ -85,11 +90,13 @@ func (b Building) MarshalJSON() ([]byte, error) {
 		UserID         uint       `json:"user_id"`
 		Key            string     `json:"key"`
 		Level          int        `json:"level"`
+		Produces       string     `json:"produces"`
 		IsConstructing bool       `json:"is_constructing"`
 		StartedAt      *time.Time `json:"started_at"`
 		CompletesAt    *time.Time `json:"completes_at"`
 		UpgradeCost    Production `json:"upgrade_cost"`
 	}
+	def := BuildingDefinitions[BuildingKey(b.Key)]
 	return json.Marshal(Alias{
 		ID:             b.ID,
 		CreatedAt:      b.CreatedAt,
@@ -97,6 +104,7 @@ func (b Building) MarshalJSON() ([]byte, error) {
 		UserID:         b.UserID,
 		Key:            b.Key,
 		Level:          b.Level,
+		Produces:       def.Produces,
 		IsConstructing: b.IsConstructing,
 		StartedAt:      b.StartedAt,
 		CompletesAt:    b.CompletesAt,
