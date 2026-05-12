@@ -1,6 +1,7 @@
 package models
 
 import (
+	"encoding/json"
 	"math"
 	"time"
 
@@ -68,12 +69,39 @@ var BuildingDefinitions = map[BuildingKey]BuildingDefinition{
 
 type Building struct {
 	gorm.Model
-	UserID         uint   `gorm:"uniqueIndex:idx_user_building_key;not null;index"`
-	Key            string `gorm:"uniqueIndex:idx_user_building_key;not null"`
-	Level          int    `gorm:"not null;default:0"`
-	IsConstructing bool   `gorm:"not null;default:false"`
-	StartedAt      *time.Time
-	CompletesAt    *time.Time
+	UserID         uint       `gorm:"uniqueIndex:idx_user_building_key;not null;index" json:"user_id"`
+	Key            string     `gorm:"uniqueIndex:idx_user_building_key;not null"       json:"key"`
+	Level          int        `gorm:"not null;default:0"                               json:"level"`
+	IsConstructing bool       `gorm:"not null;default:false"                           json:"is_constructing"`
+	StartedAt      *time.Time `json:"started_at"`
+	CompletesAt    *time.Time `json:"completes_at"`
+}
+
+func (b Building) MarshalJSON() ([]byte, error) {
+	type Alias struct {
+		ID             uint       `json:"id"`
+		CreatedAt      time.Time  `json:"created_at"`
+		UpdatedAt      time.Time  `json:"updated_at"`
+		UserID         uint       `json:"user_id"`
+		Key            string     `json:"key"`
+		Level          int        `json:"level"`
+		IsConstructing bool       `json:"is_constructing"`
+		StartedAt      *time.Time `json:"started_at"`
+		CompletesAt    *time.Time `json:"completes_at"`
+		UpgradeCost    Production `json:"upgrade_cost"`
+	}
+	return json.Marshal(Alias{
+		ID:             b.ID,
+		CreatedAt:      b.CreatedAt,
+		UpdatedAt:      b.UpdatedAt,
+		UserID:         b.UserID,
+		Key:            b.Key,
+		Level:          b.Level,
+		IsConstructing: b.IsConstructing,
+		StartedAt:      b.StartedAt,
+		CompletesAt:    b.CompletesAt,
+		UpgradeCost:    b.UpgradeCost(),
+	})
 }
 
 func IsValidBuildingKey(key string) bool {
