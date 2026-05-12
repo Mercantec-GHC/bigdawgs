@@ -5,6 +5,7 @@ namespace BigDawgs.EconomyService.Services;
 public class BotService
 {
     private readonly MarketService _marketService;
+    private static readonly Random Random = new();
 
     public BotService(MarketService marketService)
     {
@@ -25,19 +26,27 @@ public class BotService
 
     private static MarketDogBoneTradeDto DecideBotTrade(decimal currentPrice)
     {
+        string type;
+
         if (currentPrice <= 4m)
         {
-            return new MarketDogBoneTradeDto
-            {
-                Type = "buy",
-                Amount = 10
-            };
+            type = Random.Next(100) < 75 ? "buy" : "sell";
         }
+        else if (currentPrice >= 8m)
+        {
+            type = Random.Next(100) < 75 ? "sell" : "buy";
+        }
+        else
+        {
+            type = Random.Next(2) == 0 ? "buy" : "sell";
+        }
+
+        var amount = Random.Next(1, 21); 
 
         return new MarketDogBoneTradeDto
         {
-            Type = "sell",
-            Amount = 10
+            Type = type,
+            Amount = amount
         };
     }
 }
