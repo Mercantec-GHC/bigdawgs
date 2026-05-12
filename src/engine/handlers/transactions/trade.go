@@ -5,6 +5,7 @@ import (
 	"bigdawgs/models"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"net/http"
 
 	"gorm.io/gorm"
@@ -35,6 +36,8 @@ func TradeResources(db *gorm.DB) http.Handler {
 			http.Error(w, "invalid request body", http.StatusBadRequest)
 			return
 		}
+
+		fmt.Println("Received trade request:", req.Spent, req.SpentAmount, req.ReceiveKey, req.ReceiveAmount)
 
 		if !models.IsValidResourceKey(req.Spent) || !models.IsValidResourceKey(req.ReceiveKey) {
 			http.Error(w, "invalid resource key", http.StatusBadRequest)

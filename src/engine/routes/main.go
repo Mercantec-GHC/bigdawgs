@@ -18,6 +18,7 @@ func Register(mux *http.ServeMux, db *gorm.DB) {
 	/* Buildings routes */
 	mux.Handle("GET /buildings", auth(buildings.ListBuildingsHandler(db)))
 	mux.Handle("GET /buildings/{building}", auth(buildings.GetSpecificBuilding(db)))
+	mux.Handle("GET /buildings/{building}/{uid}", auth(buildings.GetUserSpecificBuilding(db)))
 	mux.Handle("POST /buildings/create", auth(buildings.CreateDefaultBuilding(db)))
 	mux.Handle("POST /buildings/{building}/upgrade", auth(buildings.UpgradeBuilding(db)))
 	mux.Handle("POST /buildings/{building}/create", auth(buildings.CreateBuilding(db)))
