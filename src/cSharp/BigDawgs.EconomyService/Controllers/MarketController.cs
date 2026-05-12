@@ -51,19 +51,9 @@ public class MarketController : ControllerBase
         if (string.IsNullOrWhiteSpace(userId))
             return Unauthorized("User id was not found in JWT.");
 
-        return Ok(_marketService.RunBotTrade());
-    }
-
-    [HttpPost("bot/simulate")]
-    public ActionResult<MarketDogBonePriceResponseDto> SimulateBotTrade()
-    {
-        var userId = GetUserId();
-
-        if (string.IsNullOrWhiteSpace(userId))
-            return Unauthorized("User id was not found in JWT.");
-
         return Ok(_botService.SimulateBotTrade());
     }
+
 
     [HttpGet("history")]
     public ActionResult<MarketTradeHistoryResponseDto> GetTradeHistory([FromQuery] int limit = 20)
