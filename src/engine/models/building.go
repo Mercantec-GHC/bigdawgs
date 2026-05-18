@@ -84,31 +84,33 @@ type Building struct {
 
 func (b Building) MarshalJSON() ([]byte, error) {
 	type Alias struct {
-		ID             uint       `json:"id"`
-		CreatedAt      time.Time  `json:"created_at"`
-		UpdatedAt      time.Time  `json:"updated_at"`
-		UserID         uint       `json:"user_id"`
-		Key            string     `json:"key"`
-		Level          int        `json:"level"`
-		Produces       string     `json:"produces"`
-		IsConstructing bool       `json:"is_constructing"`
-		StartedAt      *time.Time `json:"started_at"`
-		CompletesAt    *time.Time `json:"completes_at"`
-		UpgradeCost    Production `json:"upgrade_cost"`
+		ID                uint       `json:"id"`
+		CreatedAt         time.Time  `json:"created_at"`
+		UpdatedAt         time.Time  `json:"updated_at"`
+		UserID            uint       `json:"user_id"`
+		Key               string     `json:"key"`
+		Level             int        `json:"level"`
+		Produces          string     `json:"produces"`
+		IsConstructing    bool       `json:"is_constructing"`
+		StartedAt         *time.Time `json:"started_at"`
+		CompletesAt       *time.Time `json:"completes_at"`
+		UpgradeCost       Production `json:"upgrade_cost"`
+		ProductionPerTick Production `json:"production_per_tick"`
 	}
 	def := BuildingDefinitions[BuildingKey(b.Key)]
 	return json.Marshal(Alias{
-		ID:             b.ID,
-		CreatedAt:      b.CreatedAt,
-		UpdatedAt:      b.UpdatedAt,
-		UserID:         b.UserID,
-		Key:            b.Key,
-		Level:          b.Level,
-		Produces:       def.Produces,
-		IsConstructing: b.IsConstructing,
-		StartedAt:      b.StartedAt,
-		CompletesAt:    b.CompletesAt,
-		UpgradeCost:    b.UpgradeCost(),
+		ID:                b.ID,
+		CreatedAt:         b.CreatedAt,
+		UpdatedAt:         b.UpdatedAt,
+		UserID:            b.UserID,
+		Key:               b.Key,
+		Level:             b.Level,
+		Produces:          def.Produces,
+		IsConstructing:    b.IsConstructing,
+		StartedAt:         b.StartedAt,
+		CompletesAt:       b.CompletesAt,
+		UpgradeCost:       b.UpgradeCost(),
+		ProductionPerTick: b.ProductionPerTick(),
 	})
 }
 
