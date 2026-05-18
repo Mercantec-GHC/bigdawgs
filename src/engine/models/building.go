@@ -56,8 +56,8 @@ var BuildingDefinitions = map[BuildingKey]BuildingDefinition{
 	Doghouse: {
 		Key:             Doghouse,
 		DisplayName:     "The Doghouse",
-		BaseCost:        Production{DogBones: 300, DogCoins: 150, Dogs: 20},
-		BaseResourceCap: Production{DogBones: 1000, DogCoins: 500, Dogs: 10},
+		BaseCost:        Production{DogBones: 300, DogCoins: 150, Dogs: 10},
+		BaseResourceCap: Production{DogBones: 1000, DogCoins: 500, Dogs: 20},
 	},
 	DogKennel: {
 		Key:            DogKennel,
