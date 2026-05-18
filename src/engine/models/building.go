@@ -30,11 +30,12 @@ type Production struct {
 }
 
 type BuildingDefinition struct {
-	Key            BuildingKey
-	DisplayName    string
-	Produces       string
-	BaseProduction Production
-	BaseCost       Production
+	Key             BuildingKey
+	DisplayName     string
+	Produces        string
+	BaseProduction  Production
+	BaseCost        Production
+	BaseResourceCap Production
 }
 
 var BuildingDefinitions = map[BuildingKey]BuildingDefinition{
@@ -53,17 +54,17 @@ var BuildingDefinitions = map[BuildingKey]BuildingDefinition{
 		BaseCost:       Production{DogBones: 200, DogCoins: 100, Dogs: 10},
 	},
 	Doghouse: {
-		Key:            Doghouse,
-		DisplayName:    "The Doghouse",
-		Produces:       string(ResourceDog),
-		BaseProduction: Production{Dogs: 2},
-		BaseCost:       Production{DogBones: 300, DogCoins: 150, Dogs: 20},
+		Key:             Doghouse,
+		DisplayName:     "The Doghouse",
+		BaseCost:        Production{DogBones: 300, DogCoins: 150, Dogs: 20},
+		BaseResourceCap: Production{DogBones: 1000, DogCoins: 500, Dogs: 10},
 	},
 	DogKennel: {
-		Key:         DogKennel,
-		DisplayName: "The DogKennel",
-		Produces:    string(ResourceDog),
-		BaseCost:    Production{DogBones: 150, DogCoins: 75},
+		Key:            DogKennel,
+		DisplayName:    "The DogKennel",
+		Produces:       string(ResourceDog),
+		BaseProduction: Production{Dogs: 2},
+		BaseCost:       Production{DogBones: 150, DogCoins: 75},
 	},
 	Market: {
 		Key:         Market,
@@ -80,6 +81,7 @@ type Building struct {
 	IsConstructing bool       `gorm:"not null;default:false"                           json:"is_constructing"`
 	StartedAt      *time.Time `json:"started_at"`
 	CompletesAt    *time.Time `json:"completes_at"`
+	DoghouseLevel  int        `gorm:"-"                                                json:"-"`
 }
 
 func (b Building) MarshalJSON() ([]byte, error) {
@@ -96,6 +98,7 @@ func (b Building) MarshalJSON() ([]byte, error) {
 		CompletesAt       *time.Time `json:"completes_at"`
 		UpgradeCost       Production `json:"upgrade_cost"`
 		ProductionPerTick Production `json:"production_per_tick"`
+		ResourceCap       Production `json:"resource_cap"`
 	}
 	def := BuildingDefinitions[BuildingKey(b.Key)]
 	return json.Marshal(Alias{
@@ -111,6 +114,7 @@ func (b Building) MarshalJSON() ([]byte, error) {
 		CompletesAt:       b.CompletesAt,
 		UpgradeCost:       b.UpgradeCost(),
 		ProductionPerTick: b.ProductionPerTick(),
+		ResourceCap:       ResourceCap(b.DoghouseLevel),
 	})
 }
 
@@ -130,6 +134,18 @@ func (b Building) ProductionPerTick() Production {
 		DogCoins: int64(math.Round(float64(definition.BaseProduction.DogCoins) * multiplier)),
 		DogBones: int64(math.Round(float64(definition.BaseProduction.DogBones) * multiplier)),
 		Dogs:     int64(math.Round(float64(definition.BaseProduction.Dogs) * multiplier)),
+	}
+}
+
+func ResourceCap(doghouseLevel int) Production {
+	def := BuildingDefinitions[Doghouse]
+	if doghouseLevel < 1 {
+		return Production{}
+	}
+	return Production{
+		DogCoins: def.BaseResourceCap.DogCoins * int64(doghouseLevel),
+		DogBones: def.BaseResourceCap.DogBones * int64(doghouseLevel),
+		Dogs:     def.BaseResourceCap.Dogs * int64(doghouseLevel),
 	}
 }
 

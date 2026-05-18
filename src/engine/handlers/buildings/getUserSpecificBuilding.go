@@ -48,9 +48,14 @@ func GetUserSpecificBuilding(db *gorm.DB) http.Handler {
 			return
 		}
 
+		var doghouse models.Building
+		if err := db.Where("user_id = ? AND key = ?", building.UserID, string(models.Doghouse)).First(&doghouse).Error; err == nil {
+			building.DoghouseLevel = doghouse.Level
+		}
+
 		w.Header().Set("Content-Type", "application/json")
 		_ = json.NewEncoder(w).Encode(GetBuildingResponse{
-			Message:  "resource bag loaded",
+			Message:  "Found users building",
 			Building: building,
 		})
 	})

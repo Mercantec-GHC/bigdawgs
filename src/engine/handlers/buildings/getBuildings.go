@@ -23,6 +23,17 @@ func ListBuildingsHandler(db *gorm.DB) http.Handler {
 			return
 		}
 
+		doghouseLevel := 0
+		for _, b := range buildings {
+			if models.BuildingKey(b.Key) == models.Doghouse {
+				doghouseLevel = b.Level
+				break
+			}
+		}
+		for i := range buildings {
+			buildings[i].DoghouseLevel = doghouseLevel
+		}
+
 		w.Header().Set("Content-Type", "application/json")
 		_ = json.NewEncoder(w).Encode(buildings)
 	})

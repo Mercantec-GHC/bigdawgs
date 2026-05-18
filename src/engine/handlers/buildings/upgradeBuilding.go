@@ -47,6 +47,18 @@ func UpgradeBuilding(db *gorm.DB) http.Handler {
 			return
 		}
 
+		if models.BuildingKey(buildingKey) != models.Doghouse {
+			var doghouse models.Building
+			if err := db.Where("user_id = ? AND key = ?", userID, string(models.Doghouse)).First(&doghouse).Error; err != nil {
+				http.Error(w, "failed to load doghouse", http.StatusInternalServerError)
+				return
+			}
+			if building.Level+1 > doghouse.Level {
+				http.Error(w, "doghouse needs to be a higher level before upgrading this building", http.StatusUnprocessableEntity)
+				return
+			}
+		}
+
 		if building.IsConstructing {
 			http.Error(w, "building is already upgrading", http.StatusConflict)
 			return
