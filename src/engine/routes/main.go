@@ -27,6 +27,7 @@ func Register(mux *http.ServeMux, db *gorm.DB) {
 	/* Resources routes */
 	mux.Handle("POST /resources/create", auth(resources.CreateDefaultResourceBag(db)))
 	mux.Handle("GET /resources/getBag", auth(resources.GetResourceBag(db)))
+	mux.Handle("GET /resources/getCap", auth(resources.GetResourceCap(db)))
 	mux.Handle("DELETE /resources/deleteBag", auth(resources.DeleteResourceBag(db)))
 
 	/* Transaction routes */

@@ -40,6 +40,15 @@ func processTick(db *gorm.DB) error {
 		var userBuildings []models.Building
 		db.Where("user_id = ?", userID).Find(&userBuildings)
 
+		doghouseLevel := 0
+		for _, b := range userBuildings {
+			if models.BuildingKey(b.Key) == models.Doghouse {
+				doghouseLevel = b.Level
+				break
+			}
+		}
+		cap := models.ResourceCap(doghouseLevel)
+
 		var total models.Production
 		for _, building := range userBuildings {
 			production := building.ProductionPerTick()
@@ -48,6 +57,11 @@ func processTick(db *gorm.DB) error {
 			total.Dogs += production.Dogs
 		}
 
+		capMap := map[models.ResourceKey]int64{
+			models.ResourceDogCoin: cap.DogCoins,
+			models.ResourceDogBone: cap.DogBones,
+			models.ResourceDog:     cap.Dogs,
+		}
 		adjustments := map[models.ResourceKey]int64{
 			models.ResourceDogCoin: total.DogCoins,
 			models.ResourceDogBone: total.DogBones,
@@ -57,9 +71,13 @@ func processTick(db *gorm.DB) error {
 			if amount == 0 {
 				continue
 			}
+			maxCap := capMap[key]
+			if maxCap == 0 {
+				continue
+			}
 			db.Model(&models.ResourceBag{}).
 				Where("user_id = ? AND resource_key = ?", userID, string(key)).
-				UpdateColumn("amount", gorm.Expr("amount + ?", amount))
+				UpdateColumn("amount", gorm.Expr("LEAST(amount + ?, ?)", amount, maxCap))
 		}
 	}
 	return nil

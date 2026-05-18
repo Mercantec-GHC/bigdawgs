@@ -17,6 +17,12 @@ type ResourceBag struct {
 	Amount      int64  `gorm:"not null;default:0"`
 }
 
+type ResourceCapModel struct {
+	DogCoins int64 `json:"dog_coins"`
+	DogBones int64 `json:"dog_bones"`
+	Dogs     int64 `json:"dogs"`
+}
+
 func IsValidResourceKey(key string) bool {
 	switch ResourceKey(key) {
 	case ResourceDogCoin, ResourceDogBone, ResourceDog:
