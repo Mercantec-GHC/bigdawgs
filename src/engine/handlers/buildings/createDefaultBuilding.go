@@ -24,10 +24,7 @@ func CreateDefaultBuilding(db *gorm.DB) http.Handler {
 			building := models.Building{
 				UserID: userID,
 				Key:    string(building.Key),
-			}
-
-			if building.Key == string(models.Doghouse) {
-				building.Level = 1
+				Level:  1,
 			}
 
 			result := db.Where(models.Building{
