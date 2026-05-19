@@ -9,9 +9,11 @@ module ViewModels
       create_buildings
     end
 
+    
+
     def create_buildings
       building_data.each do |building_data|
-        case building_data.fetch('Key')
+        case building_data.fetch('key')
         when 'the_dog_kennel'
           @kennel = Domain::Kennel.new(building_data)
           buildings << @kennel
@@ -30,6 +32,7 @@ module ViewModels
         end
       end
     end
+
     def to_json
       {
         kennel: @kennel,

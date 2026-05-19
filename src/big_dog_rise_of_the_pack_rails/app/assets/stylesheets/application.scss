@@ -671,3 +671,14 @@ body {
   white-space: nowrap;
   pointer-events: none;
 }
+.market-history-table {
+  --bs-table-bg: transparent;
+  --bs-table-color: #f3ead8;
+  --bs-table-border-color: rgba(242, 191, 87, 0.15);
+}
+
+.market-history-table td {
+  background: rgba(0, 0, 0, 0.55);
+  color: #f3ead8;
+  border-color: rgba(242, 191, 87, 0.15);
+}

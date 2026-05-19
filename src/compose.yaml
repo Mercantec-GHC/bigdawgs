@@ -33,6 +33,21 @@ services:
       postgres:
         condition: service_healthy
 
+  jobs:
+    build:
+      context: ./big_dog_rise_of_the_pack_rails
+      dockerfile: Dockerfile
+    command: ["bin/jobs"]
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      RAILS_ENV: development
+      DATABASE_URL: ${DATABASE_URL}
+      JWT_SECRET: ${JWT_SECRET}
+      ENGINE_BASE_URL: ${ENGINE_BASE_URL}
+      MARKETPLACE_BASE_URL: ${MARKETPLACE_BASE_URL}
+      
   engine:
     build:
       context: ./engine

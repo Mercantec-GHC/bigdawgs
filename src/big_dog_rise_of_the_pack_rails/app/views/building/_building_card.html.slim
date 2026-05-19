@@ -7,7 +7,7 @@
       .d-flex.flex-column.col-6
         h5.card-text Building description 
         p.card-text = building.description.gsub("\n", "<br>").html_safe
-        p.card-text =  "Current production: 1 dog bone per minute." if building.production != nil
+        p.card-text.mb-2 =  building.production if building.production != nil
       .d-flex.flex-column.align-items-center.col-6.mb-2
         = image_tag building.image_path, alt: building.name, class: "card-img-top img-fluid"
         - if building.is_constructing 
@@ -15,7 +15,7 @@
 
     .d-flex.justify-content-center.mb-2
       - if building.is_constructing
-        = button_to "Under construction", "#", class: "btn btn-primary disabled"
+        = button_to "Under construction", show_more_building_index_path, class: "btn btn-primary disabled"
       - else
         = button_to building.cost.gsub(":", " "), building_index_path(building: building.building_data_for_construcktion), method: :post, class: "btn btn-primary"
-      = link_to "show details", "#", class: "btn btn-secondary ms-2"
+      = link_to "show details", show_more_building_index_path, class: "btn btn-secondary ms-2"

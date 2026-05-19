@@ -1,6 +1,6 @@
 
 .d-flex.text-white.flex-column
-  - if @market_place.fetch("Level", 0).to_i > 0
+  - if @market_place.fetch("level", 0).to_i > 0
     .d-flex.col-12.justify-content-center.flex-column.align-items-center
       h1 Market Place
       h5 The Market is always open. Buy and sell Dog Bones. Prices change with supply and demand.
@@ -33,6 +33,7 @@
               = f.label :dog_bones, "Amount to sell", class: "market-label mb-2"
               .d-flex.align-items-center.gap-3
                 span.market-resource-icon 🦴
+                = f.hidden_field :price, value: @price
                 = f.input_field :dog_bones,
                   as: :range,
                   min: 0,
@@ -83,6 +84,7 @@
             method: :post,
             html: { class: "d-flex flex-column gap-3" } do |f|
             .market-field
+              = f.hidden_field :price, value: @price
               = f.label :dog_coins, "Amount to buy", class: "market-label mb-2"
               .d-flex.align-items-center.gap-3
                 span.market-resource-icon 🪙
@@ -116,3 +118,5 @@
   - else
     .d-flex.col-12.justify-content-center
       h2 Market Place not build yet, you need market place to buy and sell resources
+  = turbo_frame_tag "market_history", src: marketplace_market_history_path do
+    = "Loading...."    

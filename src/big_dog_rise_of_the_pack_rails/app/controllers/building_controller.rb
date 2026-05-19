@@ -11,14 +11,10 @@ class BuildingController < ApplicationController
     @buildings_view_model = ViewModels::Buildings.new(buildings)
   end
 
-  def destroy
-
+  def show_more
+    
   end
-
-  def delete
-
-  end
-
+  
   def create
     if can_build?
       building_name = create_params[:building_name] 
@@ -27,7 +23,7 @@ class BuildingController < ApplicationController
       if response.success?
         flash[:success] = "Building upgrade started successfully!"
       else
-        flash[:error] = "Failed to upgrade building. Please try again."
+        flash[:error] = "Failed to upgrade building. #{response.body}"
       end
       redirect_to building_index_path
     else

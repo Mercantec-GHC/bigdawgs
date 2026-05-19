@@ -1,8 +1,9 @@
-- if @market_history.present?
-  .d-flex.bg-primary.border.border-3.border-primary.bg-opacity-25.flex-column
-    h1 Market Activity
-    .d-flex
-      = render "history_table"
-    .d-flex
-- else
-  p No market history available.
+= turbo_frame_tag "market_history" do 
+  - if @market_history.present?
+    .d-flex.bg-primary.border.border-3.border-primary.bg-opacity-25.flex-column
+      h2.text-center Market Activity
+      .d-flex.justify-content-between.p-1
+        = render "history_table", row_number: 0
+        = render "history_table", row_number: 5
+  - else
+    p No market history available.
