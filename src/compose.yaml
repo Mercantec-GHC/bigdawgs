@@ -37,7 +37,7 @@ services:
     build:
       context: ./big_dog_rise_of_the_pack_rails
       dockerfile: Dockerfile
-    command: ["bin/jobs"]
+    command: ["bin/rails", "solid_queue:start"]
     depends_on:
       postgres:
         condition: service_healthy
