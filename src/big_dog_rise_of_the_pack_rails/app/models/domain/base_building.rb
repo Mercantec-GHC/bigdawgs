@@ -3,17 +3,18 @@ module Domain
     attr_reader :level, :upgrade_cost, :image_path, :name, :production, :description, :is_constructing, :construction_time_left, :bones_cost, :dog_coins_cost, :dogs_cost
 
     def initialize(building_data, description, image_path = nil)
-      @level = building_data.fetch("Level", 0)
+      @level = building_data.fetch("level", 0)
+      upgrade_cost = building_data.fetch("upgrade_cost")
       @image_path = image_path
-      @bones_cost = building_data.fetch("UpgradeCostDogBones", 0)
-      @dog_coins_cost = building_data.fetch("UpgradeCostDogCoins", 0)
-      @dogs_cost = building_data.fetch("UpgradeCostDogs", 0)
+      @bones_cost = upgrade_cost.fetch("dog_bones", 0)
+      @dog_coins_cost = upgrade_cost.fetch("dog_coins", 0)
+      @dogs_cost = upgrade_cost.fetch("dogs", 0)
       @production = building_data.fetch("production", nil)
-      @name = building_data.fetch("Key", "Unknown Building").gsub("_", " ").capitalize
+      @name = building_data.fetch("key", "is_constructing").gsub("_", " ").capitalize
       @description = description
-      @is_constructing = building_data.fetch("IsConstructing", false)
+      @is_constructing = building_data.fetch("is_constructing", false)
       if @is_constructing
-        @construction_time_left = Time.parse(building_data.fetch("CompletesAt")) - Time.now
+        @construction_time_left = Time.parse(building_data.fetch("completes_at")) - Time.now
       else
         @construction_time_left = nil
       end
@@ -31,6 +32,10 @@ module Domain
 
     def cost
       "Bones: #{bones_cost} \n Coins: #{dog_coins_cost} \n Dogs: #{dogs_cost}"
+    end
+
+    def production
+      " "
     end
     
   end

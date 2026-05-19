@@ -1,10 +1,19 @@
-table.table.table-striped
-        tbody
-          - 5.times do |index|
-            - transaction  = @market_history[index]
-              tr
-                td= transaction.created_at.strftime("%Y-%m-%d %H:%M") if transaction.respond_to?(:created_at)
-                td= transaction.player_name
-                td= number_to_currency(transaction.price) if transaction.respond_to?(:price)
-                td= 🦴
-                td= 🪙
+table.table.market-history-table.border.border-primary.border-1.border-opacity-25
+  tbody
+    - 5.times do |index|
+      - transaction = @market_history[index + row_number]
+      - next unless transaction
+      - if transaction.fetch("userId") == "bot"
+        - transaction_user = "bot"
+      - else
+        - transaction_user = @users.find { |user| user.id == transaction.fetch("userId").to_i }.name
+
+      - time = Time.parse(transaction.fetch("createdAt"))
+      - minutes_ago = ((Time.current - time) / 60).to_i
+
+      tr
+        td= "#{minutes_ago} min ago"
+        td= transaction_user
+        td= transaction.fetch("type") == "buy" ? "bought" : "sold"
+        td= "🦴 #{number_with_delimiter(transaction.fetch("amount"))}"
+        td= "🪙 #{number_with_delimiter(transaction.fetch("tradeValue"))}"

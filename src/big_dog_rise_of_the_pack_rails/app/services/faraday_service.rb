@@ -5,7 +5,12 @@ class FaradayService
   end
 
   def self.fetch_data(url, connection_type: "ENGINE_BASE_URL", token: nil)
-    new(url, connection_type).fetch_data(token: token)
+   response = new(url, connection_type).fetch_data(token: token)
+   if response.success?
+    response.body
+   else
+    raise "#{response.status}, error: #{response}"
+   end
   end
 
   attr_reader :url, :connection_type
@@ -16,6 +21,7 @@ class FaradayService
   end
 
   def post_request(token: nil, body: nil)
+    puts body
     faraday_connection.post(url) do |request|
       request.headers["Authorization"] = "Bearer #{token}" if token
       request.body = body if body
@@ -35,7 +41,6 @@ class FaradayService
     response = faraday_connection.get(url) do |request|
       request.headers["Authorization"] = "Bearer #{token}" if token
     end
-    response&.body
+    response
   end
-
 end

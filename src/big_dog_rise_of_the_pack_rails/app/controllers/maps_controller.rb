@@ -24,8 +24,8 @@ class MapsController < ApplicationController
     if settlement
       @free = false
       player = settlement.user
-      player.id == current_user.id ? @base_name = "Your" : @base_name = "#{player.name}s"
-      
+      @dog_house_level = FaradayService.fetch_data("/buildings/the_doghouse/#{player.id}", token: current_user.encoded_json_web_token)&.fetch("building")&.fetch("level", 1)
+      player.id == current_user.id ? @base_name = "Your" : @base_name = "#{player.name}s"   
     else
       @free = true
     end
