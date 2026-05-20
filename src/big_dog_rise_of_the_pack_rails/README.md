@@ -69,11 +69,3 @@ Communication between services happens through API calls using Faraday and JWT t
 - Docker (optional)
 
 ---
-
-# Setup
-
-Clone the repository:
-
-```bash
-git clone https://github.com/Mercantec-GHC/h5-msp-bigdawgs-1
-cd h5-msp-bigdawgs-1
